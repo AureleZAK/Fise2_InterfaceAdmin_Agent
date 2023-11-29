@@ -26,7 +26,7 @@ class MonitorTask:
         while True:
             self.cpu_percent = psutil.cpu_percent(percpu=True)
             time.sleep(self.interval)
-            self.ram_percent = psutil.virtual_memory().available
+            self.ram_percent = psutil.virtual_memory()
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"

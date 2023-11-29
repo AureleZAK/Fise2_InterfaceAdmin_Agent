@@ -3,6 +3,8 @@ This module defines API routes for handling CPU-related data.
 """
 from typing import List
 from fastapi import APIRouter, Request
+from monitor import MonitorTask
+from domain.services import RamService
 from domain.schemas import (
     ExceptionResponseSchema,
     GetRamResponseSchema
@@ -27,6 +29,5 @@ async def ram_usage(request: Request) -> GetRamResponseSchema:
     Returns:
         Percent used
     """
-
-    return GetRamResponseSchema(percent=request.app.state.monitortask.ram_percent)
+    return await RamService().get_ram(request.app.state.monitortask)
 

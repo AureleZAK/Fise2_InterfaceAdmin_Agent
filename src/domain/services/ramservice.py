@@ -16,10 +16,8 @@ class RamService:
         ...
 
     async def get_ram(self, monitor_task: MonitorTask) -> Ram:
-        ram =Ram()
-        for total, percent in enumerate(monitor_task.ram_percent):
-            ram.total = total
-            ram.percent =percent
+
+        ram = Ram(total= monitor_task.ram_info.total , percent= monitor_task.ram_info.percent)
         return ram
 
     def __str__(self):

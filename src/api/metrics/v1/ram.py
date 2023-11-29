@@ -28,6 +28,19 @@ async def get_ram(request: Request) -> GetRamResponseSchema:
     Returns:
         int: number of cpu core.
     """
-    return GetRamResponseSchema(percent=request.app.state.monitortask.ram_stats)
+    ram_stats = request.app.state.monitortask.ram_stats
 
+    return GetRamResponseSchema(
+        total = ram_stats.get('total', 0),
+        used=ram_stats.get('used', 0),
+        free=ram_stats.get('free', 0),
+        percent=ram_stats.get('percent', 0.0)
+    )
+    
+    """
+    return GetRamResponseSchema(total=request.app.state.monitortask.ram_stats['total'],
+                                used=request.app.state.monitortask.ram_stats['used'],
+                                free=request.app.state.monitortask.ram_stats['free'],
+                                percent=request.app.state.monitortask.ram_stats['percent'] )
 
+"""

@@ -1,12 +1,13 @@
 """
-This module defines API routes for handling CPU-related data.
+This module defines API routes for handling RAM-related data.
 """
+from typing import List
 from fastapi import APIRouter, Request
 from domain.schemas import (
     ExceptionResponseSchema,
     GetRamResponseSchema,
 )
-from domain.services import ramservice
+from domain.services import RamService
 
 ram_router = APIRouter()
 

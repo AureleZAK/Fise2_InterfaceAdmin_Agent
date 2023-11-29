@@ -34,7 +34,10 @@ class MonitorTask:
                 'free' : ram.available,
                 'percent' : ram.percent
             }
+            #             self.ram_percent = psutil.virtual_memory().available
             time.sleep(self.interval)
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"
+
+

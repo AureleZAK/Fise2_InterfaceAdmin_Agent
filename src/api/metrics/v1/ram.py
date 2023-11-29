@@ -18,7 +18,7 @@ ram_router = APIRouter()
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},
 )
-async def get_core_number(request: Request) -> GetRamResponseSchema:
+async def get_ram(request: Request) -> GetRamResponseSchema:
     """
     Route to get the number of CPU core.
 
@@ -28,4 +28,6 @@ async def get_core_number(request: Request) -> GetRamResponseSchema:
     Returns:
         int: number of cpu core.
     """
-    return GetRamResponseSchema(number=request.app.state.monitortask.num_cores)
+    return GetRamResponseSchema(percent=request.app.state.monitortask.ram_stats)
+
+

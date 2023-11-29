@@ -5,21 +5,19 @@ from typing import List
 from fastapi import APIRouter, Request
 from domain.schemas import (
     ExceptionResponseSchema,
-    GetCpuResponseSchema,
-    GetCpuCoreResponseSchema,
+    GetRamResponseSchema
 )
-from domain.services import CpuService
 
 ram_router = APIRouter()
 
 
 @ram_router.get(
     "/usage",
-    response_model=List[GetCpuResponseSchema],
+    response_model=GetRamResponseSchema,
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},
 )
-async def ram_usage(request: Request) -> List[GetCpuResponseSchema]:
+async def ram_usage(request: Request) -> GetRamResponseSchema:
     """
     Get the percent of used ram
 
@@ -29,4 +27,6 @@ async def ram_usage(request: Request) -> List[GetCpuResponseSchema]:
     Returns:
         Percent used
     """
-    return await RamService().get_cpu(request.app.state.monitortask)
+
+    return GetRamResponseSchema(percent=request.app.state.monitortask.ram_percent)
+

@@ -1,18 +1,31 @@
 image: python:3.8-alpine
 
-stages:
-  - build
-  - test
 
 before_script:
-  - pip install requirements
+  - echo "Dependencies installation"
+  - python3 --version
+  - pip3 --version
+  - pip3 install -r requirements.txt
+  
 
-build:
-  stage: build
-  script:
-  - echo "Here goes my build command [NOT IMPLEMENTED YET]"
+stages:
+  - compile
+  - lint
+  - test
+
+compile:
+  stage: compile
+    - "Compiling code"
+    - find src/ -type f -name '*.py' -exec python3 -m py_compile {} +
+
+lint:
+  stage: lint
+    - echo "Checking code quality"
+    - find src/ -type f -name '*.py' -exec python3 -m pylint {} +
+
 
 test:
   stage: test
   script:
-  - echo "Running unit tests [NOT IMPLEMENTED YET]"
+    - echo "Running test"
+    - python3 -m pytest src/tests/

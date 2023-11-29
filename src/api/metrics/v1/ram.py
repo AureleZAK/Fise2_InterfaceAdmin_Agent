@@ -17,7 +17,7 @@ ram_router = APIRouter()
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},
 )
-async def get_cpu(request: Request) -> List[GetRamResponseSchema]:
+async def get_ram(request: Request) -> List[GetRamResponseSchema]:
     """
     Route to get a list of CPU data.
 
@@ -27,6 +27,6 @@ async def get_cpu(request: Request) -> List[GetRamResponseSchema]:
     Returns:
         List[GetCpuResponseSchema]: A list of CPU data as per the response model.
     """
-    return await ramservice().get_ram(request.app.state.monitortask)
+    return await RamService().get_ram(request.app.state.monitortask)
 
 

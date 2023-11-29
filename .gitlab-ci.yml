@@ -1,0 +1,15 @@
+image: python:3.8-alpine
+
+stages:
+  - compile
+  - test
+
+compile:
+  stage: compile
+  script:
+  - echo "Here goes my compile command [NOT IMPLEMENTED YET]"
+
+test:
+  stage: test
+  script:
+  - echo "Running unit tests [NOT IMPLEMENTED YET]"

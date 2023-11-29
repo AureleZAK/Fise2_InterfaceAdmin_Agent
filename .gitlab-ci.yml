@@ -15,11 +15,13 @@ stages:
 
 compile:
   stage: compile
+  script:
     - "Compiling code"
     - find src/ -type f -name '*.py' -exec python3 -m py_compile {} +
 
 lint:
   stage: lint
+  script:
     - echo "Checking code quality"
     - find src/ -type f -name '*.py' -exec python3 -m pylint {} +
 

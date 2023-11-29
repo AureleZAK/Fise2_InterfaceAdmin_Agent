@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class getRamResponseSchema(BaseModel):
+class GetRamResponseSchema(BaseModel):
     total : int
     used : int
     free : int

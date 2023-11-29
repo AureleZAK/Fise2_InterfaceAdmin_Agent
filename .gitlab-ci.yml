@@ -1,13 +1,16 @@
 image: python:3.8-alpine
 
 stages:
-  - compile
+  - build
   - test
 
-compile:
-  stage: compile
+before_script:
+  - pip install requirements
+
+build:
+  stage: build
   script:
-  - echo "Here goes my compile command [NOT IMPLEMENTED YET]"
+  - echo "Here goes my build command [NOT IMPLEMENTED YET]"
 
 test:
   stage: test

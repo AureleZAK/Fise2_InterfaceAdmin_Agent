@@ -1,13 +1,12 @@
 """
 This module defines API routes for handling RAM-related data.
 """
-from typing import List
 from fastapi import APIRouter, Request
 from domain.schemas import (
     ExceptionResponseSchema,
     GetIpResponseSchema,
 )
-from domain.services import RamService
+from domain.services import IpService
 
 ip_router = APIRouter()
 
@@ -18,7 +17,7 @@ ip_router = APIRouter()
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},
 )
-async def get_ip(request: Request) -> GetIpResponseSchema:
+async def get_ip(request: Request):
     """
     Route to get the number of CPU core.
 
@@ -28,9 +27,9 @@ async def get_ip(request: Request) -> GetIpResponseSchema:
     Returns:
         int: number of cpu core.
     """
-    client_ip = request.client.host
+    ip_data = await ip_service.get_ip(request)
 
-    return {"Client IP": client_ip}
+    return ip_data
 
     
  

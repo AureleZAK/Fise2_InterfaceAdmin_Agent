@@ -5,5 +5,5 @@ from .ipservice import IpService
 __all__ = [
     "CpuService",
     "RamService",
-    "IpService"
+    "IpService",
 ]

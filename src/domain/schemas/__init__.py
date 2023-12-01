@@ -11,7 +11,7 @@ class ExceptionResponseSchema(BaseModel):
 __all__ = [
     "GetCpuResponseSchema",
     "GetCpuCoreResponseSchema",
-    "GetRamResponseSchema"
-    "GetIpResponseSchema"
+    "GetRamResponseSchema",
+    "GetIpResponseSchema",
     "ExceptionResponseSchema",
 ]

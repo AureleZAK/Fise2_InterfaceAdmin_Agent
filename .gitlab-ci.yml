@@ -1,9 +1,8 @@
-image: python:3.8-alpine
+image: python:3.10.12
 
 
 before_script:
   - echo "Dependencies installation"
-  - apt install python3.10
   - python3 --version
   - pip3 --version
   - pip3 install -r requirements.txt

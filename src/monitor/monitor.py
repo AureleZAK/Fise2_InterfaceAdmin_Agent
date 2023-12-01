@@ -35,7 +35,6 @@ class MonitorTask:
                 'percent' : ram.percent
             }
             time.sleep(self.interval)
-            client_host = request.client.host
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"

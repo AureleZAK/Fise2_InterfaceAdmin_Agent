@@ -9,6 +9,7 @@ from domain.schemas import (
 from domain.services import IpService
 
 ip_router = APIRouter()
+ip_service = IpService()
 
 
 @ip_router.get(
@@ -30,6 +31,7 @@ async def get_ip(request: Request):
     ip_data = await ip_service.get_ip(request)
 
     return ip_data
+
 
     
  

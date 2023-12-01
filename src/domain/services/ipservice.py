@@ -14,4 +14,4 @@ class IpService:
         client_host = request.client.host
 
         # Créer et retourner un objet Ram avec les données obtenues
-        return Ip = client_host
+        return Ip(ip= client_host)

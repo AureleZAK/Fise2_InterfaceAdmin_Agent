@@ -30,4 +30,4 @@ test:
   stage: test
   script:
     - echo "Running test"
-    - python3 -m pytest src/tests/test*
+    - python3 -m pytest src/tests/

@@ -16,7 +16,7 @@ stages:
 compile:
   stage: compile
   script:
-    - "Compiling code"
+    - echo "Compiling code"
     - find src/ -type f -name '*.py' -exec python3 -m py_compile {} +
 
 lint:

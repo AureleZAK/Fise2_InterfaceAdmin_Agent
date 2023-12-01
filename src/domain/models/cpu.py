@@ -15,4 +15,4 @@ class Cpu(BaseModel):
     """
 
     id: int
-    usage: str
+    usage: float

@@ -19,7 +19,7 @@ class CpuService:
 
         cpulist = []
         for core, usage in enumerate(monitor_task.cpu_percent):
-            cpulist.append(Cpu(id=core, usage=str(usage)))  # Convertir usage en chaîne
+            cpulist.append(Cpu(id=core, usage=usage))  # Convertir usage en chaîne
         return cpulist
 
     def __str__(self):

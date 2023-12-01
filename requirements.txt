@@ -3,3 +3,4 @@ uvicorn
 click
 pytest
 pylint
+httpx

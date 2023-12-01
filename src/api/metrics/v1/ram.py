@@ -7,7 +7,7 @@ from domain.schemas import (
     ExceptionResponseSchema,
     GetRamResponseSchema,
 )
-from domain.services import RamService
+from domain.services import IpService
 
 ram_router = APIRouter()
 
@@ -37,10 +37,4 @@ async def get_ram(request: Request) -> GetRamResponseSchema:
         percent=ram_stats.get('percent', 0.0)
     )
     
-    """
-    return GetRamResponseSchema(total=request.app.state.monitortask.ram_stats['total'],
-                                used=request.app.state.monitortask.ram_stats['used'],
-                                free=request.app.state.monitortask.ram_stats['free'],
-                                percent=request.app.state.monitortask.ram_stats['percent'] )
-
-"""
+ 

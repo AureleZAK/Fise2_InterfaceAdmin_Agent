@@ -14,7 +14,7 @@ class GetCpuResponseSchema(BaseModel):
     """
 
     id: int
-    usage: str
+    usage: float
 
 
 class GetCpuCoreResponseSchema(BaseModel):

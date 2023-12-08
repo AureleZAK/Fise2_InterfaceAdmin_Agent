@@ -1,24 +1,22 @@
 """
-This module defines a controller class for fetching CPU values from a monitoring task.
+This module defines a controller class for fetching RAM values from a monitoring task.
 """
-from typing import List
 from domain.models import Ram
 from monitor import MonitorTask
 
-
-# Controller class to fetch cpu values from monitoring task
 class RamService:
-    """
-    Controller class to fetch CPU values from a monitoring task.
-    """
-
     def __init__(self):
         ...
 
     async def get_ram(self, monitor_task: MonitorTask) -> Ram:
 
-        ram = Ram(total= monitor_task.ram_info.total , percent= monitor_task.ram_info.percent)
-        return ram
+        # Obtenir les données de RAM à partir de monitor_task
+        ram_data = monitor_task.ram_stats
 
-    def __str__(self):
-        return self.__class__.__name__
+        # Créer et retourner un objet Ram avec les données obtenues
+        return Ram(
+            total=ram_data['total'],
+            used=ram_data['used'],
+            free=ram_data['free'],
+            percent=ram_data['percent']
+        )

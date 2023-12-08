@@ -1,0 +1,4 @@
+Création Manuelle de l'Environnement Virtuel :
+
+    Essayez de créer l'environnement virtuel manuellement dans le terminal avec python3 -m venv .venv pour voir si le même problème se produit.
+    Si la création manuelle réussit, activez l'environnement virtuel avec source .venv/bin/activate (en utilisant bash) et exécutez ensuite pip install -r requirements.dev.txt.

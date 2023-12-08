@@ -4,7 +4,7 @@ This module defines a data model for RAM information.
 from pydantic import BaseModel
 
 
-# RAM data model
+# CPU data model
 class Ram(BaseModel):
     """
     Pydantic data model for representing RAM information.
@@ -13,5 +13,8 @@ class Ram(BaseModel):
         total int: The RAM usage in int format.
         percent float: The RAM usage in float format.
     """
-    total: float
-    percent: float
+    def __init__(self, total: int, used: int, free: int, percent: float):
+        self.total = total
+        self.used = used
+        self.free = free
+        self.percent = percent

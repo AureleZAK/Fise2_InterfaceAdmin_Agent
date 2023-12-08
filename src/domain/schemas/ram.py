@@ -12,5 +12,7 @@ class GetRamResponseSchema(BaseModel):
         total int: The RAM usage in int format.
         percent float: The Ram usage in float format.
     """
-    total: float
-    percent: float
+    total : int
+    used : int
+    free : int
+    percent : float

@@ -15,6 +15,8 @@ from api.default.default import default_router
 from core.exceptions import CustomException
 from core.config import get_config
 from monitor import MonitorTask
+import apache_log_parser
+from datetime import datetime
 
 
 def init_routers(fastapi: FastAPI) -> None:
@@ -69,6 +71,24 @@ def make_middleware() -> List[Middleware]:
         ),
     ]
     return middleware
+
+
+
+def log_parser(log_entry):
+    log_format = '%v %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"'
+    parser = apache_log_parser.make_parser(log_format)
+
+    parsed_data = parser(log_entry)
+    result_log = [
+        parsed_data.get('remote_host', ''),
+        parsed_data.get('time_received', ''),
+        parsed_data.get('request_first_line', ''),
+        parsed_data.get('status', '')
+    ]
+    print(result_log)
+
+    return result_log
+
 
 
 def create_app() -> FastAPI:

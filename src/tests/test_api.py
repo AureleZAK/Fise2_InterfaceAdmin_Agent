@@ -1,9 +1,10 @@
 """This module defines an exemple of test"""
 import threading
 from fastapi.testclient import TestClient
-from server import app
+from server import app, log_parser
 from monitor import MonitorTask
 from domain.models import Ram
+
 
 
 class MonitorTaskFake(MonitorTask):
@@ -17,6 +18,7 @@ class MonitorTaskFake(MonitorTask):
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
     ram_info: Ram = Ram(total=12345678, percent=57.8)
+
 
     def monitor(self):
         pass
@@ -42,6 +44,16 @@ def test_get_cpu_usage():
     assert response.json() == [{"id": 0, "usage": 10}, {"id": 1, "usage": 12}]
     # restore monitortask for next test
     app.state.monitortask = save_app
+
+log = 'localhost:80 192.168.240.50 - - [08/Dec/2023:08:55:20 +0000] "GET / HTTP/1.0" 200 15075 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"'
+result_log = {'192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','200'}
+
+
+def test_parsing():
+    result = log_parser(log)
+    print(result)
+    print(result_log)
+    assert result == result_log
 
 
 def test_get_cpu_core():

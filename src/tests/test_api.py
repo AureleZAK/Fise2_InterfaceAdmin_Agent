@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from server import app
 from monitor import MonitorTask
 from domain.models import Ram
-
+from domain.models import Ip
 
 class MonitorTaskFake(MonitorTask):
     """
@@ -16,7 +16,18 @@ class MonitorTaskFake(MonitorTask):
     interval: int = 0
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
-    ram_info: Ram = Ram(total=12345678, percent=57.8)
+    ip: str = "192.168.1.100"
+    
+
+    def __init__(self):
+        super().__init__()
+        # Définir des valeurs prédéfinies pour la RAM
+        self.ram_stats = {
+            'total': 8000,  # Exemple : 8000 MB de RAM totale
+            'used': 4000,   # 4000 MB utilisés
+            'free': 4000,   # 4000 MB libres
+            'percent': 50   # 50% d'utilisation
+        }
 
     def monitor(self):
         pass
@@ -51,9 +62,35 @@ def test_get_cpu_core():
     assert isinstance(response.json()["number"], int)
 
 def test_get_ram():
-    save_app = app.state.monitortask
+    # Sauvegarder l'instance actuelle de MonitorTask
+    original_monitortask = app.state.monitortask
+
+    # Remplacer par l'instance mock
     app.state.monitortask = MonitorTaskFake()
-    response = client.get("/metrics/v2/ram/usage")
+
+    response = client.get("/metrics/v1/ram/ram")
     assert response.status_code == 200
-    assert response.json() == {"total": 12345678, "percent": 57.8}
+    data = response.json()
+
+    # Vérifier que les données correspondent aux valeurs mock
+    assert data == {
+        'total': 8000,
+        'used': 4000,
+        'free': 4000,
+        'percent': 50
+    }
+
+    # Restaurer l'instance originale de MonitorTask
+    app.state.monitortask = original_monitortask
+
+def test_get_ip():
+    save_app = app.state.monitortask
+    
+    # Créez une instance de MonitorTaskFake
+    app.state.monitortask = MonitorTaskFake()
+    response = client.get("/metrics/v1/ip/ip")
+    print(f"Response IP: {response.json()}")
+    assert response.status_code == 200
+    assert response.json() == {"ip": "testclient"}
+    # restore monitortask for next test
     app.state.monitortask = save_app

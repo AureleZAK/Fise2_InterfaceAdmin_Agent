@@ -47,15 +47,18 @@ def test_get_cpu_usage():
 
 log = 'localhost:80 192.168.240.50 - - [08/Dec/2023:08:55:20 +0000] "GET / HTTP/1.0" 200 15075 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"'
 result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','200']
-
+page = {"GET / HTTP/1.0":2, "GET /?page_id=2 HTTP/1.0":1, "GET /wp-cron.php HTTP/1.1":1, "GET /?p=1 HTTP/1.0":1 }
 
 def test_parsing():
     result = log_parser(log)
     assert result == result_log
 
 def test_count_ip() :
-    result = count_ip("/Users/corentinlaval/Desktop/TSE/INTERFACE/ProjetV2/agent/src/tests/filelog.txt")
+    result, good, error, pagetotest = count_ip("/Users/corentinlaval/Desktop/TSE/INTERFACE/ProjetV2/agent/src/tests/filelog.txt")
     assert result == 3
+    assert good == 4
+    assert error == 1
+    assert pagetotest == page
 
 
 def test_get_cpu_core():

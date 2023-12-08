@@ -76,6 +76,9 @@ def count_ip(log_file):
 
 
     unique_ips = set()
+    cpt404 = 0
+    cpt200 = 0
+    page_visits = {}
 
     try:
 
@@ -83,11 +86,19 @@ def count_ip(log_file):
             for line in file:
                 log_entry = log_parser(line)
                 ip = log_entry[0]
-                print(ip)
+                status = log_entry[3]
+                request_url = log_entry[2]
+                page_visits[request_url] = page_visits.get(request_url,0)+1
+                print(request_url)
+                if (status == '404'):
+                    cpt404 = cpt404 + 1
+                else:
+                    cpt200 = cpt200 + 1
+
                 if (ip != '127.0.0.1'):
                     unique_ips.add(ip)
 
-        return len(unique_ips)
+        return len(unique_ips), cpt200, cpt404, page_visits
     except FileNotFoundError:
         print(f"Le fichier {log_file} n'a pas été trouvé.")
         return None

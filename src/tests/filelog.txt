@@ -1,5 +1,5 @@
 localhost:80 192.168.240.50 - - [08/Dec/2023:08:55:20 +0000] "GET / HTTP/1.0" 200 15075 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
 localhost:80 192.168.240.51 - - [08/Dec/2023:12:59:34 +0000] "GET /?page_id=2 HTTP/1.0" 200 12538 "http://lancelot.telecomste.net/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
 localhost:80 192.168.240.50 - - [08/Dec/2023:12:59:51 +0000] "GET / HTTP/1.0" 200 15075 "http://lancelot.telecomste.net/?page_id=2" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
-localhost:80 127.0.0.1 - - [08/Dec/2023:13:00:01 +0000] "GET /wp-cron.php HTTP/1.1" 200 303 "-" "Mozilla/5.0"
+localhost:80 127.0.0.1 - - [08/Dec/2023:13:00:01 +0000] "GET /wp-cron.php HTTP/1.1" 404 303 "-" "Mozilla/5.0"
 localhost:80 192.168.240.80 - - [08/Dec/2023:13:00:37 +0000] "GET /?p=1 HTTP/1.0" 200 15648 "http://lancelot.telecomste.net/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"

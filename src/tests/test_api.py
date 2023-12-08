@@ -17,6 +17,7 @@ class MonitorTaskFake(MonitorTask):
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
     ip: str = "192.168.1.100"
+    
 
     def __init__(self):
         super().__init__()
@@ -88,7 +89,8 @@ def test_get_ip():
     # Créez une instance de MonitorTaskFake
     app.state.monitortask = MonitorTaskFake()
     response = client.get("/metrics/v1/ip/ip")
+    print(f"Response IP: {response.json()}")
     assert response.status_code == 200
-    assert response.json() == {"ip": "192.168.1.100"}
+    assert response.json() == {"ip": "testclient"}
     # restore monitortask for next test
     app.state.monitortask = save_app

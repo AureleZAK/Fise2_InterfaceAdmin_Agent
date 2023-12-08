@@ -57,22 +57,18 @@ def test_get_cpu_usage():
 
 def test_get_cpu_core():
     response = client.get("/metrics/v1/cpu/core")
-    # we can test types but not values because they will change at each test.
     assert response.status_code == 200
     assert isinstance(response.json()["number"], int)
 
 def test_get_ram():
-    # Sauvegarder l'instance actuelle de MonitorTask
     original_monitortask = app.state.monitortask
 
-    # Remplacer par l'instance mock
     app.state.monitortask = MonitorTaskFake()
 
     response = client.get("/metrics/v1/ram/ram")
     assert response.status_code == 200
     data = response.json()
 
-    # Vérifier que les données correspondent aux valeurs mock
     assert data == {
         'total': 8000,
         'used': 4000,
@@ -80,17 +76,14 @@ def test_get_ram():
         'percent': 50
     }
 
-    # Restaurer l'instance originale de MonitorTask
     app.state.monitortask = original_monitortask
 
 def test_get_ip():
     save_app = app.state.monitortask
     
-    # Créez une instance de MonitorTaskFake
     app.state.monitortask = MonitorTaskFake()
     response = client.get("/metrics/v1/ip/ip")
     print(f"Response IP: {response.json()}")
     assert response.status_code == 200
     assert response.json() == {"ip": "testclient"}
-    # restore monitortask for next test
     app.state.monitortask = save_app

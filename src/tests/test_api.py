@@ -16,6 +16,16 @@ class MonitorTaskFake(MonitorTask):
     interval: int = 0
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
+    
+    def __init__(self):
+        super().__init__()
+        # Définir des valeurs prédéfinies pour la RAM
+        self.ram_stats = {
+            'total': 8000,  # Exemple : 8000 MB de RAM totale
+            'used': 4000,   # 4000 MB utilisés
+            'free': 4000,   # 4000 MB libres
+            'percent': 50   # 50% d'utilisation
+        }
 
     def monitor(self):
         pass
@@ -50,19 +60,26 @@ def test_get_cpu_core():
     assert isinstance(response.json()["number"], int)
 
 def test_get_ram():
-    response = client.get("/metrics/v1/ram/ram")  
+    # Sauvegarder l'instance actuelle de MonitorTask
+    original_monitortask = app.state.monitortask
+
+    # Remplacer par l'instance mock
+    app.state.monitortask = MonitorTaskFake()
+
+    response = client.get("/metrics/v1/ram/ram")
     assert response.status_code == 200
     data = response.json()
-    
-    assert "total" in data
-    assert "used" in data
-    assert "free" in data
-    assert "percent" in data
 
-    assert isinstance(data["total"], int)
-    assert isinstance(data["used"], int)
-    assert isinstance(data["free"], int)
-    assert isinstance(data["percent"], float)
+    # Vérifier que les données correspondent aux valeurs mock
+    assert data == {
+        'total': 8000,
+        'used': 4000,
+        'free': 4000,
+        'percent': 50
+    }
+
+    # Restaurer l'instance originale de MonitorTask
+    app.state.monitortask = original_monitortask
 
 def test_get_ip():
     response = client.get("/metrics/v1/ip/ip")

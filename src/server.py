@@ -75,7 +75,7 @@ def make_middleware() -> List[Middleware]:
 
 
 def log_parser(log_entry):
-    log_format = '%v %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"'
+    log_format = '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"'
     parser = apache_log_parser.make_parser(log_format)
 
     parsed_data = parser(log_entry)

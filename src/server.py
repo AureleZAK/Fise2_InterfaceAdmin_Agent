@@ -72,7 +72,25 @@ def make_middleware() -> List[Middleware]:
     ]
     return middleware
 
+def count_ip(log_file):
 
+
+    unique_ips = set()
+
+    try:
+
+        with open(log_file, 'r') as file:
+            for line in file:
+                log_entry = log_parser(line)
+                ip = log_entry[0]
+                print(ip)
+                if (ip != '127.0.0.1'):
+                    unique_ips.add(ip)
+
+        return len(unique_ips)
+    except FileNotFoundError:
+        print(f"Le fichier {log_file} n'a pas été trouvé.")
+        return None
 
 def log_parser(log_entry):
     log_format = '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"'
@@ -85,7 +103,6 @@ def log_parser(log_entry):
         parsed_data.get('request_first_line', ''),
         parsed_data.get('status', '')
     ]
-    print(result_log)
 
     return result_log
 

@@ -1,7 +1,7 @@
 """This module defines an exemple of test"""
 import threading
 from fastapi.testclient import TestClient
-from server import app, log_parser
+from server import app, log_parser, count_ip
 from monitor import MonitorTask
 from domain.models import Ram
 
@@ -51,9 +51,11 @@ result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','
 
 def test_parsing():
     result = log_parser(log)
-    print(result)
-    print(result_log)
     assert result == result_log
+
+def test_count_ip() :
+    result = count_ip("/Users/corentinlaval/Desktop/TSE/INTERFACE/ProjetV2/agent/src/tests/filelog.txt")
+    assert result == 3
 
 
 def test_get_cpu_core():

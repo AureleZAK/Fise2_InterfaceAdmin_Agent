@@ -11,7 +11,7 @@ class Cpu(BaseModel):
 
     Attributes:
         id (int): The ID of the CPU data.
-        usage (str): The CPU usage in string format.
+        usage (float): The CPU usage in string format.
     """
 
     id: int

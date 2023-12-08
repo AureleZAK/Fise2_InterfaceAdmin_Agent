@@ -72,7 +72,7 @@ def make_middleware() -> List[Middleware]:
     ]
     return middleware
 
-def count_ip(log_file):
+def count_log(log_file):
 
 
     unique_ips = set()
@@ -88,8 +88,8 @@ def count_ip(log_file):
                 ip = log_entry[0]
                 status = log_entry[3]
                 request_url = log_entry[2]
-                page_visits[request_url] = page_visits.get(request_url,0)+1
-                print(request_url)
+                request_url_split = request_url.split()[1]
+                page_visits[request_url_split] = page_visits.get(request_url_split,0)+1
                 if (status == '404'):
                     cpt404 = cpt404 + 1
                 else:
@@ -97,6 +97,8 @@ def count_ip(log_file):
 
                 if (ip != '127.0.0.1'):
                     unique_ips.add(ip)
+
+
 
         return len(unique_ips), cpt200, cpt404, page_visits
     except FileNotFoundError:

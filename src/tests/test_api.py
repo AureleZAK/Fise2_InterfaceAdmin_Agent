@@ -16,7 +16,8 @@ class MonitorTaskFake(MonitorTask):
     interval: int = 0
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
-    
+    ip: str = "192.168.1.100"
+
     def __init__(self):
         super().__init__()
         # Définir des valeurs prédéfinies pour la RAM
@@ -82,8 +83,12 @@ def test_get_ram():
     app.state.monitortask = original_monitortask
 
 def test_get_ip():
+    save_app = app.state.monitortask
+    
+    # Créez une instance de MonitorTaskFake
+    app.state.monitortask = MonitorTaskFake()
     response = client.get("/metrics/v1/ip/ip")
     assert response.status_code == 200
-    data = response.json()
-
-    assert "ip" in data
+    assert response.json() == {"ip": "192.168.1.100"}
+    # restore monitortask for next test
+    app.state.monitortask = save_app

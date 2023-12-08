@@ -5,5 +5,5 @@ from .ip import Ip
 __all__ = [
     "Cpu",
     "Ram",
-    "Ip"
+    "Ip",
 ]

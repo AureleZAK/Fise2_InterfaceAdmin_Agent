@@ -8,6 +8,7 @@ class MonitorTask:
 
     interval: int
     cpu_percent: list[float]
+    ram_info: list[float]
     num_cores: int
 
     ram_stats : dict
@@ -35,6 +36,7 @@ class MonitorTask:
                 'percent' : ram.percent
             }
             time.sleep(self.interval)
+            self.ram_info = psutil.virtual_memory()
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"

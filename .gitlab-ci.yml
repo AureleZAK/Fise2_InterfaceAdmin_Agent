@@ -1,0 +1,33 @@
+image: python:3.10.12
+
+
+before_script:
+  - echo "Dependencies installation"
+  - python3 --version
+  - pip3 --version
+  - pip3 install -r requirements.txt
+  
+
+stages:
+  - compile
+  - lint
+  - test
+
+compile:
+  stage: compile
+  script:
+    - echo "Compiling code"
+    - find src/ -type f -name '*.py' -exec python3 -m py_compile {} + 
+
+lint:
+  stage: lint
+  script:
+    - echo "Checking code quality"
+    - find src/ -type f -name '*.py' -exec python3 -m pylint {} + || true
+
+
+test:
+  stage: test
+  script:
+    - echo "Running test"
+    - python3 -m pytest src/tests/

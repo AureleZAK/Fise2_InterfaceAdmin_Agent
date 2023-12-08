@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 from server import app
 from monitor import MonitorTask
 from domain.models import Ram
+from domain.models import Hostname
 
 
 class MonitorTaskFake(MonitorTask):
@@ -17,6 +18,7 @@ class MonitorTaskFake(MonitorTask):
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
     ram_info: Ram = Ram(total=12345678, percent=57.8)
+    hostname_info: Hostname = Hostname(hostname= "usertest")
 
     def monitor(self):
         pass
@@ -57,3 +59,9 @@ def test_get_ram():
     assert response.status_code == 200
     assert response.json() == {"total": 12345678, "percent": 57.8}
     app.state.monitortask = save_app
+
+def test_get_hostname():
+    response = client.get("/metrics/v1/hostname/hostname")
+    assert response.status_code == 200
+    assert response.json() == {"hostane": "usertest"}
+    

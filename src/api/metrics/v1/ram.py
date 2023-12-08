@@ -20,13 +20,13 @@ ram_router = APIRouter()
 )
 async def get_ram(request: Request) -> GetRamResponseSchema:
     """
-    Route to get the number of CPU core.
+    Route to get informations regarding the ram.
 
     Args:
         request (Request): The incoming request.
 
     Returns:
-        int: number of cpu core.
+        Ram: ram informations.
     """
     ram_stats = request.app.state.monitortask.ram_stats
 

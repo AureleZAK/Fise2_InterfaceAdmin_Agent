@@ -16,18 +16,10 @@ class CpuService:
         ...
 
     async def get_cpu(self, monitor_task: MonitorTask) -> List[Cpu]:
-        """
-        Get CPU values from the provided monitoring task and return them as a list of Cpu objects.
 
-        Args:
-            monitor_task (MonitorTask): The monitoring task to fetch CPU data from.
-
-        Returns:
-            List[Cpu]: A list of Cpu objects containing CPU values.
-        """
         cpulist = []
         for core, usage in enumerate(monitor_task.cpu_percent):
-            cpulist.append(Cpu(id=core, usage=usage))
+            cpulist.append(Cpu(id=core, usage=usage))  # Convertir usage en chaîne
         return cpulist
 
     def __str__(self):

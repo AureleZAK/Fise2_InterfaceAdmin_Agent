@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from .cpu import GetCpuResponseSchema, GetCpuCoreResponseSchema
 from .ram import GetRamResponseSchema
 from .ip import GetIpResponseSchema
-from .hostname import GetHostnameResponseSchema
 
 
 class ExceptionResponseSchema(BaseModel):
@@ -14,6 +13,5 @@ __all__ = [
     "GetCpuCoreResponseSchema",
     "GetRamResponseSchema",
     "GetIpResponseSchema",
-    "GetHostnameResponseSchema",
     "ExceptionResponseSchema",
 ]

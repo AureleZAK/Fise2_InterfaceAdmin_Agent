@@ -1,7 +1,7 @@
 """This module defines a `MonitorTask` class for monitoring metrics on a host."""
 import time
 import psutil
-import socket
+
 
 class MonitorTask:
     """A class for monitoring metrics."""
@@ -12,8 +12,6 @@ class MonitorTask:
     num_cores: int
 
     ram_stats : dict
-
-    hostname_info : str
 
     def __init__(self) -> None:
         """
@@ -39,7 +37,6 @@ class MonitorTask:
             }
             time.sleep(self.interval)
             self.ram_info = psutil.virtual_memory()
-            self.hostname_info = psutil.os.uname().nodename
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"

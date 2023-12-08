@@ -9,8 +9,10 @@ class GetRamResponseSchema(BaseModel):
     Pydantic data model for the response schema representing RAM information.
 
     Attributes:
-        total int: The RAM usage in int format.
-        percent float: The Ram usage in float format.
+        total (int): The RAM total in int format.
+        used (int): The RAM usage in int format.
+        free (int): The RAM usage in int format.
+        percent (float): The RAM usage in float format.
     """
     total : int
     used : int

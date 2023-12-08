@@ -11,8 +11,8 @@ before_script:
 stages:
   - compile
   - lint
-  - code coverage
   - test
+  - code coverage
 
 compile:
   stage: compile
@@ -26,14 +26,15 @@ lint:
     - echo "Checking code quality"
     - find src/ -type f -name '*.py' -exec python3 -m pylint {} + || true
 
-code coverage:
-  stage: code coverage
-  script:
-    - echo "Running code coverage"
-    - coverage run --source=src/ -m pytest
-
 test:
   stage: test
   script:
     - echo "Running test"
     - python3 -m pytest src/tests/
+
+code coverage:
+  stage: code coverage
+  script:
+    - echo "Running code coverage"
+    - coverage run --source=src/ -m pytest
+    - coverage report -m

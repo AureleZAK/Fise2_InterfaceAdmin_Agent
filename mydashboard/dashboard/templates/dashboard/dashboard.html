@@ -1,0 +1,15 @@
+<!-- dashboard/templates/dashboard/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tableau de bord du serveur</title>
+</head>
+<body>
+<h1>Tableau de bord du serveur</h1>
+<ul>
+  {% for data_point in data_points %}
+  <li>{{ data_point.timestamp }} - CPU Usage: {{ data_point.cpu_usage }}</li>
+  {% endfor %}
+</ul>
+</body>
+</html>

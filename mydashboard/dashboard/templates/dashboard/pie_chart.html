@@ -1,0 +1,8 @@
+<!-- pie_chart.html -->
+ <!-- Si vous avez une base, sinon ignorez cette ligne -->
+
+{% block content %}
+<div>
+  {{ graph_html|safe }}  <!-- Inclure le graphique Plotly -->
+</div>
+{% endblock %}

@@ -1,10 +1,11 @@
 """This module defines an exemple of test"""
 import threading
 from fastapi.testclient import TestClient
-from server import app
+from server import app, log_parser, count_log
 from monitor import MonitorTask
 from domain.models import Ram
 from domain.models import Ip
+
 
 class MonitorTaskFake(MonitorTask):
     """
@@ -28,6 +29,7 @@ class MonitorTaskFake(MonitorTask):
             'free': 4000,   # 4000 MB libres
             'percent': 50   # 50% d'utilisation
         }
+
 
     def monitor(self):
         pass
@@ -53,6 +55,21 @@ def test_get_cpu_usage():
     assert response.json() == [{"id": 0, "usage": 10}, {"id": 1, "usage": 12}]
     # restore monitortask for next test
     app.state.monitortask = save_app
+
+log = 'localhost:80 192.168.240.50 - - [08/Dec/2023:08:55:20 +0000] "GET / HTTP/1.0" 200 15075 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"'
+result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','200']
+page = {"/":2, "/?page_id=2":1, "/wp-cron.php":1, "/?p=1":1 }
+
+def test_parsing():
+    result = log_parser(log)
+    assert result == result_log
+
+def test_count_log() :
+    result, good, error, pagetotest = count_log("src/tests/filelog.txt")
+    assert result == 3
+    assert good == 4
+    assert error == 1
+    assert pagetotest == page
 
 
 def test_get_cpu_core():

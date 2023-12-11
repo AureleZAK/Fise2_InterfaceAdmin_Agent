@@ -6,3 +6,4 @@ pylint
 httpx
 psutil
 coverage
+anybadge

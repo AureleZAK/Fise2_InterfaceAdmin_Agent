@@ -17,5 +17,5 @@ class Log(BaseModel):
     """
     nbip: int
     failed: int
-    succed: int
+    succeed: int
     nbwebsites: dict

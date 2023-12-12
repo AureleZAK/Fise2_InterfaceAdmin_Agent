@@ -58,7 +58,7 @@ class LogService:
         return Log(
             nbip= result['total_ip'],
             failed= result['error'],
-            succed= result['good'],
+            succeed= result['good'],
             nbwebsites= result['total_pages'])
 
     def __str__(self):

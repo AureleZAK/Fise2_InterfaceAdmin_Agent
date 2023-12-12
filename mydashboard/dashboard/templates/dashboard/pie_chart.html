@@ -66,21 +66,20 @@
     </nav>
   </div>
   <!-- templates/votre_template.html -->
-  <h1>Données de l'API</h1>
-
-  {% if api_data %}
-  <ul>
-    {% for key, value in api_data.items %}
-    <li>{{ key }}: {{ value }}</li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p>Aucune donnée disponible pour le moment.</p>
-  {% endif %}
-
-
-  <!-- Main content -->
+    <!-- Main content -->
   <div id="content">
+    <h1>Données de l'API</h1>
+
+    {% if api_data %}
+    <ul>
+      {% for key, value in api_data.items %}
+      <li>{{ key }}: {{ value }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Aucune donnée disponible pour le moment.</p>
+    {% endif %}
+    
     {% block content %}
     <div>
       {{ graph_html|safe }}  <!-- Inclure le graphique Plotly -->

@@ -59,7 +59,7 @@
   <div id="sidebar">
     <nav>
       <ul>
-        <a href="../pie_chart"><li>Server Status</li></a>
+        <a href="../pie_chart"><li style="background-color: #F33D21;">Server Status</li></a>
         <a href="#server-control"><li>Server Control</li></a>
         <!-- Add more menu items as needed -->
       </ul>
@@ -79,7 +79,7 @@
     {% else %}
     <p>Aucune donnée disponible pour le moment.</p>
     {% endif %}
-    
+
     {% block content %}
     <div>
       {{ graph_html|safe }}  <!-- Inclure le graphique Plotly -->

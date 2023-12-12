@@ -12,7 +12,7 @@ log_router = APIRouter()
 
 
 @log_router.get(
-    "/log",
+    "",
     response_model=GetLogResponseSchema,
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},

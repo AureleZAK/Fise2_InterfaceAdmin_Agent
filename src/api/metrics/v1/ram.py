@@ -13,7 +13,7 @@ ram_router = APIRouter()
 
 
 @ram_router.get(
-    "/ram",
+    "",
     response_model=GetRamResponseSchema,
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},

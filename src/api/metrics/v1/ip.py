@@ -13,7 +13,7 @@ ip_service = IpService()
 
 
 @ip_router.get(
-    "/ip",
+    "",
     response_model=GetIpResponseSchema,
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},

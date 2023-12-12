@@ -27,7 +27,7 @@ def my_view(request):
 def pie_chart(request):
     # Fake values for the pie chart (replace with your own data)
 
-    result, good, error, pagetotest = count_log("src/tests/filelog.txt")
+    result, good, error, pagetotest = count_log("../src/tests/filelog.txt")
 
     labels = [200, 404]
 

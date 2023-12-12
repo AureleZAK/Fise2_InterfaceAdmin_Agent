@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 current_dir = os.path.dirname(__file__)
 
 DASHBOARD_DIR = os.path.join(BASE_DIR, 'dashboard')
-SRC_DIR = os.path.abspath(os.path.join(current_dir, '..\\..\\src'))
+SRC_DIR = os.path.abspath(os.path.join(current_dir, '../../src'))
 sys.path.append(SRC_DIR)
 
 print(sys.path)

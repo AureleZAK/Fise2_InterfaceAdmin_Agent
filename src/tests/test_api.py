@@ -7,6 +7,7 @@ from domain.models import Ram
 from domain.models import Ip
 
 
+
 class MonitorTaskFake(MonitorTask):
     """
     Monitor class to mock the real monitor
@@ -18,17 +19,20 @@ class MonitorTaskFake(MonitorTask):
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
     ip: str = "192.168.1.100"
+    hostname: str = "usertest"
     
 
     def __init__(self):
         super().__init__()
         # Définir des valeurs prédéfinies pour la RAM
+        self.hostname_info = "usertest"
         self.ram_stats = {
             'total': 8000,  # Exemple : 8000 MB de RAM totale
             'used': 4000,   # 4000 MB utilisés
             'free': 4000,   # 4000 MB libres
             'percent': 50   # 50% d'utilisation
         }
+        
 
 
     def monitor(self):
@@ -103,4 +107,20 @@ def test_get_ip():
     print(f"Response IP: {response.json()}")
     assert response.status_code == 200
     assert response.json() == {"ip": "testclient"}
+    app.state.monitortask = save_app
+
+def test_get_hostname():
+    save_app = app.state.monitortask
+    
+    app.state.monitortask = MonitorTaskFake()
+    
+    saved_hostname = app.state.monitortask.hostname_info
+
+    # Modifiez la valeur de hostname_info pour le test
+    app.state.monitortask.hostname_info = "usertest"
+
+    response = client.get("/metrics/v1/hostname/hostname")
+    data = response.json()
+    assert response.status_code == 200
+    assert data == {"hostname": "usertest"}
     app.state.monitortask = save_app

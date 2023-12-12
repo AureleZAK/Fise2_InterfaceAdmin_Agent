@@ -11,7 +11,7 @@ from domain.services import HostService
 import socket
 
 host_router = APIRouter()
-host_service = HostService()
+hostservice = HostService()
 
 @host_router.get(
     "/hostname",
@@ -20,11 +20,12 @@ host_service = HostService()
     responses={"400": {"model": ExceptionResponseSchema}},
 ) 
 
-async def get_hostname( request : Request):
+async def get_hostname( request : Request) -> GetHostnameResponseSchema:
     """
 
     Route to get the hostname of the server.
 
     """
-    hostname = socket.gethostname()
-    return {"hostname" : hostname}
+    
+    #hostname = await hostservice.get_hostname(request)
+    return GetHostnameResponseSchema(hostname = request.app.state.monitortask.hostname_info)

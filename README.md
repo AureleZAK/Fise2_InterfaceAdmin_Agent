@@ -5,6 +5,7 @@
 
 [![Contributors](https://img.shields.io/gitlab/url=https://devops.telecomste.fr/api/v4/projects/3747/repository/contributors/badge?private_token=glpat-hybcv5GQSsoxXabqizE6)](https://devops.telecomste.fr/printerfaceadmin/2023-24/group4/agent/-/project_members)
 
+![GitLab stars](https://img.shields.io/gitlab/stars/:https://devops.telecomste.fr/printerfaceadmin/2023-24/group4/agent)
 
 [![Pipeline Status](https://img.shields.io/gitlab/url=https://devops.telecomste.fr/api/v4/projects/3747/repository/contributors/badge?private_token=glpat-hybcv5GQSsoxXabqizE6)](https://devops.telecomste.fr/printerfaceadmin/2023-24/group4/agent/-/pipelines)
 

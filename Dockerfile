@@ -10,6 +10,6 @@ RUN pip3 install -r requirements.txt
 
 COPY ./src ./src
 
-RUN apk add --no-cache bash
+EXPOSE 8000
 
 ENTRYPOINT ["python", "/src/main.py"]

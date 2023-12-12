@@ -2,10 +2,6 @@
 
 ![Coverage](coverage.svg)
 
-
-![Membres du projet](members_badge.svg)
-
-
 ## Requirements
 
 - Python 3.X

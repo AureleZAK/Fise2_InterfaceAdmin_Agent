@@ -12,6 +12,7 @@ stages:
   - compile
   - lint
   - test
+  - code coverage
 
 compile:
   stage: compile
@@ -25,9 +26,17 @@ lint:
     - echo "Checking code quality"
     - find src/ -type f -name '*.py' -exec python3 -m pylint {} + || true
 
-
 test:
   stage: test
   script:
     - echo "Running test"
     - python3 -m pytest src/tests/
+
+code coverage:
+  stage: code coverage
+  script:
+    - echo "Running code coverage"
+    - rm coverage.svg
+    - coverage run --source=src/ -m pytest
+    - coverage report -m
+    - anybadge --value=$(coverage report -m | grep "TOTAL" | awk '{print $4}') --file=coverage.svg --label=coverage

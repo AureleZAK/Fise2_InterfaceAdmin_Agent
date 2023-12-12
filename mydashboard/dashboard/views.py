@@ -7,7 +7,7 @@ from django.shortcuts import render
 from .models import ServerData
 import plotly.express as px
 import pandas as pd
-from src import count_log
+from server import count_log
 
 def dashboard(request):
     data_points = ServerData.objects.all()  # Récupérez les données depuis la base de données

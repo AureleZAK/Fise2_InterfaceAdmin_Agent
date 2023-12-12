@@ -12,13 +12,17 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+current_dir = os.path.dirname(__file__)
 
 DASHBOARD_DIR = os.path.join(BASE_DIR, 'dashboard')
-SRC_DIR = os.path.join(BASE_DIR, 'src')
+SRC_DIR = os.path.abspath(os.path.join(current_dir, '..\\..\\src'))
+sys.path.append(SRC_DIR)
+
+print(sys.path)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 

@@ -5,3 +5,4 @@ pytest
 httpx
 psutil
 anybadge
+apache-log-parser

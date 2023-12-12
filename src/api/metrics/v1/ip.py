@@ -20,13 +20,13 @@ ip_service = IpService()
 )
 async def get_ip(request: Request):
     """
-    Route to get the number of CPU core.
+    Route to get the ip.
 
     Args:
         request (Request): The incoming request.
 
     Returns:
-        int: number of cpu core.
+        str: ip data.
     """
     ip_data = await ip_service.get_ip(request)
 

@@ -5,13 +5,13 @@ from domain.models import Ip
 from fastapi import Request
 
 class IpService:
+    """
+    Controller class to fetch IP values from a monitoring task.
+    """
     def __init__(self):
         ...
 
     async def get_ip(self, request: Request) -> Ip:
 
-        # Obtenir les données de RAM à partir de monitor_task
         client_host = request.client.host
-
-        # Créer et retourner un objet Ram avec les données obtenues
         return Ip(ip = client_host)

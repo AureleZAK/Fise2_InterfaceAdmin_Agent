@@ -1,10 +1,12 @@
 """This module defines an exemple of test"""
 import threading
 from fastapi.testclient import TestClient
-from server import app
+from server import app, log_parser, count_log
 from monitor import MonitorTask
 from domain.models import Ram
 from domain.models import Ip
+
+
 
 class MonitorTaskFake(MonitorTask):
     """
@@ -16,16 +18,21 @@ class MonitorTaskFake(MonitorTask):
     interval: int = 0
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
+    ip: str = "192.168.1.100"
     
+
     def __init__(self):
         super().__init__()
         # Définir des valeurs prédéfinies pour la RAM
+        self.hostname_info = "usertest"
         self.ram_stats = {
             'total': 8000,  # Exemple : 8000 MB de RAM totale
             'used': 4000,   # 4000 MB utilisés
             'free': 4000,   # 4000 MB libres
             'percent': 50   # 50% d'utilisation
         }
+        
+
 
     def monitor(self):
         pass
@@ -52,20 +59,36 @@ def test_get_cpu_usage():
     # restore monitortask for next test
     app.state.monitortask = save_app
 
+log = 'localhost:80 192.168.240.50 - - [08/Dec/2023:08:55:20 +0000] "GET / HTTP/1.0" 200 15075 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"'
+result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','200']
+page = {"/":2, "/?page_id=2":1, "/wp-cron.php":1, "/?p=1":1 }
 
+def test_parsing():
+    result = log_parser(log)
+    assert result == result_log
+
+def test_count_log() :
+    result, good, error, pagetotest = count_log("src/tests/filelog.txt")
+    assert result == 3
+    assert good == 4
+    assert error == 1
+    assert pagetotest == page
+
+
+def test_get_cpu_core():
+    response = client.get("/metrics/v1/cpu/core")
+    assert response.status_code == 200
+    assert isinstance(response.json()["number"], int)
 
 def test_get_ram():
-    # Sauvegarder l'instance actuelle de MonitorTask
     original_monitortask = app.state.monitortask
 
-    # Remplacer par l'instance mock
     app.state.monitortask = MonitorTaskFake()
 
     response = client.get("/metrics/v1/ram/ram")
     assert response.status_code == 200
     data = response.json()
 
-    # Vérifier que les données correspondent aux valeurs mock
     assert data == {
         'total': 8000,
         'used': 4000,
@@ -73,12 +96,25 @@ def test_get_ram():
         'percent': 50
     }
 
-    # Restaurer l'instance originale de MonitorTask
     app.state.monitortask = original_monitortask
 
 def test_get_ip():
+    save_app = app.state.monitortask
+    
+    app.state.monitortask = MonitorTaskFake()
     response = client.get("/metrics/v1/ip/ip")
+    print(f"Response IP: {response.json()}")
     assert response.status_code == 200
-    data = response.json()
+    assert response.json() == {"ip": "testclient"}
+    app.state.monitortask = save_app
 
-    assert "ip" in data
+def test_get_hostname():
+    save_app = app.state.monitortask
+    
+    app.state.monitortask = MonitorTaskFake()
+    
+    response = client.get("/metrics/v1/hostname/hostname")
+    data = response.json()
+    assert response.status_code == 200
+    assert data == {"hostname": "usertest"}
+    app.state.monitortask = save_app

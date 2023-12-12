@@ -1,4 +1,5 @@
 def generate_svg_with_members_count(members_count):
+    file.name= 'members_badge.svg'
     svg_content = f'''
     <svg xmlns="http://www.w3.org/2000/svg" width="150" height="25">
         <rect width="150" height="25" style="fill: #555" />

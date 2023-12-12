@@ -25,6 +25,9 @@ lint:
   script:
     - echo "Checking code quality"
     - find src/ -type f -name '*.py' -exec python3 -m pylint {} + || true
+    - output=$(find src/ -type f -name '*.py' -exec python3 -m pylint {} + || true --score=y)
+    - score=$(echo "$output" | grep -oP "(?<=rated at ).*?(?=/)")
+    - anybadge -l Pylint -v $score -f badge.svg -c green,yellow,orange,red
 
 test:
   stage: test

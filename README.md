@@ -2,6 +2,9 @@
 
 ![Coverage](coverage.svg)
 
+
+![Pylint Score](badge.svg)
+
 ## Requirements
 
 - Python 3.X

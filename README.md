@@ -6,8 +6,7 @@
 [![Contributors](https://img.shields.io/gitlab/url=https://devops.telecomste.fr/api/v4/projects/3747/repository/contributors/badge?private_token=glpat-hybcv5GQSsoxXabqizE6)](https://devops.telecomste.fr/printerfaceadmin/2023-24/group4/agent/-/project_members)
 
 
-[![GitLab Project Members](https://img.shields.io/badge/dynamic/json?color=orange&label=Project%20Members&query=members_count&url=https://gitlab.com/api/v4/projects/printerfaceadmin/2023-24/group4/agent)](https://gitlab.com/panaud.bastien/printerfaceadmin)
-
+[![Pipeline Status](https://img.shields.io/gitlab/url=https://devops.telecomste.fr/api/v4/projects/3747/repository/contributors/badge?private_token=glpat-hybcv5GQSsoxXabqizE6)](https://devops.telecomste.fr/printerfaceadmin/2023-24/group4/agent/-/pipelines)
 
 
 ## Requirements

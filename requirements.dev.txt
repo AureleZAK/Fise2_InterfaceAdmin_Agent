@@ -4,4 +4,6 @@ click
 pytest
 httpx
 psutil
+anybadge
 apache-log-parser
+anybadge

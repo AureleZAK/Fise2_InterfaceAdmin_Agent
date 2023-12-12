@@ -1,5 +1,7 @@
 # agent-py
 
+![Coverage](coverage.svg)
+
 ## Requirements
 
 - Python 3.X

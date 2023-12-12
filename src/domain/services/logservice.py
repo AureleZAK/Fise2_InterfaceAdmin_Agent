@@ -18,15 +18,12 @@ def log_parser(log_entry):
     return result_log
 
 def count_log(log_file):
-
-
     unique_ips = set()
     cpt404 = 0
     cpt200 = 0
     page_visits = {}
 
     try:
-
         with open(log_file, 'r') as file:
             for line in file:
                 log_entry = log_parser(line)
@@ -43,7 +40,7 @@ def count_log(log_file):
                 if (ip != '127.0.0.1'):
                     unique_ips.add(ip)
 
-        return len(unique_ips), cpt200, cpt404, page_visits
+        return {'total_ip': len(unique_ips), 'good': cpt200, 'error':cpt404, 'total_pages':page_visits}
 
     except FileNotFoundError:
         print(f"Le fichier {log_file} n'a pas été trouvé.")
@@ -57,14 +54,12 @@ class LogService:
         ...
 
     async def get_log(self) -> Log:
-        result, good, error, pagetotest = count_log("src/tests/filelog.txt")
-        print(result)
-
+        result= count_log("src/tests/filelog.txt")
         return Log(
-            nbip='result',
-            succed='good',
-            failed='error',
-            nbwebsites='pagetotest',
-        )
+            nbip= result['total_ip'],
+            failed= result['error'],
+            succed= result['good'],
+            nbwebsites= result['total_pages'])
+
     def __str__(self):
         return self.__class__.__name__

@@ -1,7 +1,6 @@
 """
 This module defines API routes for handling CPU-related data.
 """
-from typing import List
 from fastapi import APIRouter, Request
 from domain.schemas import (
     ExceptionResponseSchema,
@@ -14,11 +13,11 @@ log_router = APIRouter()
 
 @log_router.get(
     "/log",
-    response_model=List[GetLogResponseSchema],
+    response_model=GetLogResponseSchema,
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},
 )
-async def get_log(request: Request) -> List[GetLogResponseSchema]:
+async def get_log(request: Request) -> GetLogResponseSchema:
     """
     Route to get a list of CPU data.
 

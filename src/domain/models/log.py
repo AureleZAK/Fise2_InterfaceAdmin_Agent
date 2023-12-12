@@ -7,13 +7,15 @@ from pydantic import BaseModel
 # CPU data model
 class Log(BaseModel):
     """
-    Pydantic data model for representing CPU information.
+    Pydantic data model for representing Log information.
 
     Attributes:
-        id (int): The ID of the CPU data.
-        usage (float): The CPU usage in string format.
+        nbip (int)
+        failed (int)
+        succed (int)
+        nbwebsites (dict)
     """
     nbip: int
     failed: int
     succed: int
-    nbwebsites: int
+    nbwebsites: dict

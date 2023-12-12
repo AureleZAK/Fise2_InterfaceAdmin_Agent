@@ -9,21 +9,18 @@ import requests
 
 
 def get_api_data(request):
-    api_url = "http://localhost:8080/metrics/v1/log/log"
+    api_url = "http://localhost:8080/metrics/v1/log"
 
-    # Effectuer une requête GET vers l'API
-    response = requests.get(api_url)
-
-    # Vérifier si la requête a réussi (code 200)
-    if response.status_code == 200:
-        # Convertir les données JSON en un dictionnaire Python
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
         api_data = response.json()
+        return render(request, 'dashboard/pie_chart.html', {'api_data': api_data})
+    except requests.RequestException as e:
+        # Print the exception to the console for debugging
+        print(f"Error in get_api_data: {str(e)}")
+        return HttpResponse(f"Erreur de requête: {str(e)}")
 
-        # Passer les données à votre modèle de rendu (template)
-        return render(request, 'pie_chart.html', {'api_data': api_data})
-    else:
-        # Gérer les erreurs de requête
-        return HttpResponse(f"Erreur de requête: {response.status_code}")
 
 def dashboard(request):
     data_points = ServerData.objects.all()  # Récupérez les données depuis la base de données

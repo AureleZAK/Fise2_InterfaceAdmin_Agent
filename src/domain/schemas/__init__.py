@@ -3,6 +3,7 @@ from .cpu import GetCpuResponseSchema, GetCpuCoreResponseSchema
 from .ram import GetRamResponseSchema
 from .ip import GetIpResponseSchema
 from .hostname import GetHostnameResponseSchema
+from .log import GetLogResponseSchema
 
 
 class ExceptionResponseSchema(BaseModel):
@@ -16,4 +17,5 @@ __all__ = [
     "GetIpResponseSchema",
     "GetHostnameResponseSchema",
     "ExceptionResponseSchema",
+    "GetLogResponseSchema",
 ]

@@ -19,7 +19,6 @@ class MonitorTaskFake(MonitorTask):
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
     ip: str = "192.168.1.100"
-    hostname: str = "usertest"
     
 
     def __init__(self):
@@ -114,11 +113,6 @@ def test_get_hostname():
     
     app.state.monitortask = MonitorTaskFake()
     
-    saved_hostname = app.state.monitortask.hostname_info
-
-    # Modifiez la valeur de hostname_info pour le test
-    app.state.monitortask.hostname_info = "usertest"
-
     response = client.get("/metrics/v1/hostname/hostname")
     data = response.json()
     assert response.status_code == 200

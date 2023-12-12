@@ -1,4 +1,3 @@
-<!-- pie_chart.html -->
 <!-- src/main/resources/templates/home.html -->
 
 <!DOCTYPE html>
@@ -69,22 +68,33 @@
 
   <!-- Main content -->
   <div id="content">
-    {% block content %}
-    <div>
-      {{ graph_html|safe }}  <!-- Inclure le graphique Plotly -->
-    </div>
-    {% endblock %}
+    <!-- Your content goes here -->
+    <h2>Server Status</h2>
+    <p>Server 1: <span class="badge badge-success">Online</span></p>
+    <p>Server 2: <span class="badge badge-danger">Offline</span></p>
+
+    <h2>Server Control</h2>
+    <button class="btn btn-success" onclick="startServer()">Start Server</button>
+    <button class="btn btn-danger" onclick="stopServer()">Stop Server</button>
   </div>
 
 </div>
 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+  function startServer() {
+    // Add logic to start the server
+    alert('Starting server...');
+  }
+
+  function stopServer() {
+    // Add logic to stop the server
+    alert('Stopping server...');
+  }
+</script>
+
 </body>
 </html>
- <!-- Si vous avez une base, sinon ignorez cette ligne -->
-
-
-
-
-
-
-

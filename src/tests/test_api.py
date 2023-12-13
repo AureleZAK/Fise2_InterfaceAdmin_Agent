@@ -1,10 +1,9 @@
 """This module defines an exemple of test"""
 import threading
 from fastapi.testclient import TestClient
-from server import app, log_parser, count_log
+from server import app
+from domain.services.logservice import log_parser, count_log
 from monitor import MonitorTask
-from domain.models import Ram
-from domain.models import Ip
 
 
 
@@ -68,11 +67,11 @@ def test_parsing():
     assert result == result_log
 
 def test_count_log() :
-    result, good, error, pagetotest = count_log("src/tests/filelog.txt")
-    assert result == 3
-    assert good == 4
-    assert error == 1
-    assert pagetotest == page
+    result = count_log("src/tests/filelog.txt")
+    assert result['total_ip'] == 3
+    assert result['good'] == 4
+    assert result['error'] == 1
+    assert result['total_pages'] == page
 
 
 def test_get_cpu_core():
@@ -86,7 +85,7 @@ def test_get_ram():
 
     app.state.monitortask = MonitorTaskFake()
 
-    response = client.get("/metrics/v1/ram/ram")
+    response = client.get("/metrics/v1/ram")
     assert response.status_code == 200
     data = response.json()
 
@@ -103,7 +102,7 @@ def test_get_ip():
     save_app = app.state.monitortask
     
     app.state.monitortask = MonitorTaskFake()
-    response = client.get("/metrics/v1/ip/ip")
+    response = client.get("/metrics/v1/ip")
     print(f"Response IP: {response.json()}")
     assert response.status_code == 200
     assert response.json() == {"ip": "testclient"}
@@ -114,7 +113,7 @@ def test_get_hostname():
     
     app.state.monitortask = MonitorTaskFake()
     
-    response = client.get("/metrics/v1/hostname/hostname")
+    response = client.get("/metrics/v1/hostname")
     data = response.json()
     assert response.status_code == 200
     assert data == {"hostname": "usertest"}

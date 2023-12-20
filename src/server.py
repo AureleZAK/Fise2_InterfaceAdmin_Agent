@@ -10,14 +10,12 @@ from fastapi import FastAPI, Request
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+import apache_log_parser
 from api import router
 from api.default.default import default_router
 from core.exceptions import CustomException
 from core.config import get_config
 from monitor import MonitorTask
-import apache_log_parser
-from datetime import datetime
-
 
 def init_routers(fastapi: FastAPI) -> None:
     """
@@ -73,7 +71,16 @@ def make_middleware() -> List[Middleware]:
     return middleware
 
 def count_log(log_file):
+    """
+    Count various statistics from an Apache log file.
 
+    Args:
+        log_file (str): Path to the Apache log file.
+
+    Returns:
+        tuple: A tuple containing counts of unique IPs, status 200, status 404,
+        and a dictionary of page visit counts.
+    """
 
     unique_ips = set()
     cpt404 = 0
@@ -82,7 +89,7 @@ def count_log(log_file):
 
     try:
 
-        with open(log_file, 'r') as file:
+        with open(log_file, 'r', encoding='utf-8') as file:
             for line in file:
                 log_entry = log_parser(line)
                 ip = log_entry[0]
@@ -90,12 +97,12 @@ def count_log(log_file):
                 request_url = log_entry[2]
                 request_url_split = request_url.split()[1]
                 page_visits[request_url_split] = page_visits.get(request_url_split,0)+1
-                if (status == '404'):
+                if status == '404':
                     cpt404 = cpt404 + 1
                 else:
                     cpt200 = cpt200 + 1
 
-                if (ip != '127.0.0.1'):
+                if ip != '127.0.0.1':
                     unique_ips.add(ip)
 
 
@@ -106,6 +113,15 @@ def count_log(log_file):
         return None
 
 def log_parser(log_entry):
+    """
+    Parse an Apache log entry.
+
+    Args:
+        log_entry (str): An entry from an Apache log file.
+
+    Returns:
+        list: List containing parsed log data.
+    """
     log_format = '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"'
     parser = apache_log_parser.make_parser(log_format)
 

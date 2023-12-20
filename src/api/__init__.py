@@ -1,3 +1,12 @@
+"""
+Ce module définit les routes pour les métriques de l'API.
+
+Routes disponibles :
+- `/metrics/v1/cpu` : Routes pour les métriques CPU.
+- `/metrics/v1/ram` : Routes pour les métriques RAM.
+- `/metrics/v1/ip` : Routes pour les métriques IP.
+- `/metrics/v1/hostname` : Routes pour les métriques de nom d'hôte.
+"""
 from fastapi import APIRouter
 from api.metrics.v1.cpu import cpu_router as cpu_v1_router
 from api.metrics.v1.ram import ram_router as ram_v1_router
@@ -11,4 +20,3 @@ router.include_router(ip_v1_router, prefix="/metrics/v1/ip")
 router.include_router(host_v1_router, prefix="/metrics/v1/hostname")
 
 __all__ = ["router"]
-

@@ -77,6 +77,7 @@ def test_count_log() :
 
 def test_get_cpu_core():
     response = client.get("/metrics/v1/cpu/core")
+    # we can test types but not values because they will change at each test.
     assert response.status_code == 200
     assert isinstance(response.json()["number"], int)
 

@@ -112,11 +112,11 @@ def test_count_log() :
         AssertionError: If the counts of IPs, successful requests, failed requests,
                         or page visits do not match the expected values.
     """
-    result, good, error, pagetotest = count_log("src/tests/filelog.txt")
-    assert result == 3
-    assert good == 4
-    assert error == 1
-    assert pagetotest == page
+    result = count_log("src/tests/filelog.txt")
+    assert result['total_ip'] == 3
+    assert result['good'] == 4
+    assert result['error'] == 1
+    assert result['total_pages'] == page
 
 
 def test_get_cpu_core():

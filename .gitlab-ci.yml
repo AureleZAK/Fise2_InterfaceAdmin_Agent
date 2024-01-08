@@ -24,7 +24,7 @@ lint:
   stage: lint
   script:
     - echo "Checking code quality"
-    - find src/ -type f -name '*.py' -exec python3 -m pylint {} + || true
+    - find src/ -type f -name '*.py' -exec python3 -m pylint --fail-under=9 {} +
 
 test:
   stage: test

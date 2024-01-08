@@ -14,7 +14,7 @@ host_router = APIRouter()
 hostservice = HostService()
 
 @host_router.get(
-    "/hostname",
+    "",
     response_model= GetHostnameResponseSchema,
     # response_model_exclude={"id"},
     responses={"400": {"model": ExceptionResponseSchema}},

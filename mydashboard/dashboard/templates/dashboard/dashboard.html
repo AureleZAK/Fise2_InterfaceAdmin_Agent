@@ -1,0 +1,19 @@
+<!-- dashboard/templates/dashboard/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tableau de bord du serveur</title>
+</head>
+<body>
+<h1>Tableau de bord du serveur</h1>
+<form method="post" action="{% url 'pie_chart' %}">
+  {% csrf_token %}
+  <button type="submit">Click Me!</button>
+</form>
+<ul>
+  {% for data_point in data_points %}
+  <li>{{ data_point.timestamp }} - CPU Usage: {{ data_point.cpu_usage }}</li>
+  {% endfor %}
+</ul>
+</body>
+</html>

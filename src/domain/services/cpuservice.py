@@ -1,5 +1,5 @@
 """
-This module defines a controller class for fetching CPU values from a monitoring task.
+Ce module définit une classe de contrôleur pour récupérer les valeurs du CPU.
 """
 from typing import List
 from domain.models import Cpu
@@ -9,13 +9,22 @@ from monitor import MonitorTask
 # Controller class to fetch cpu values from monitoring task
 class CpuService:
     """
-    Controller class to fetch CPU values from a monitoring task.
+    Classe de contrôleur pour les opérations liées au CPU.
     """
 
     def __init__(self):
         ...
 
     async def get_cpu(self, monitor_task: MonitorTask) -> List[Cpu]:
+        """
+        Récupère les valeurs du CPU depuis une tâche de surveillance.
+
+        Arguments:
+            monitor_task (MonitorTask): Tâche de surveillance contenant les informations du CPU.
+
+        Returns:
+            List[Cpu]: Liste d'objets représentant les valeurs du CPU.
+        """
 
         cpulist = []
         for core, usage in enumerate(monitor_task.cpu_percent):

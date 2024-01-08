@@ -18,7 +18,7 @@ from core.config import get_config
     is_flag=True,
     default=False,
 )
-def main(env: str, debug: bool):
+def main(env: str = "prod", debug: bool = False):
     """
     Start main function.
 

@@ -11,4 +11,3 @@ class GetIpResponseSchema(BaseModel):
         ip (str): the ip 
     """
     ip : str
-

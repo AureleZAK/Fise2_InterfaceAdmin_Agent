@@ -14,3 +14,4 @@ class Ip(BaseModel):
 
     """
     ip: str
+    

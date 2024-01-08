@@ -31,7 +31,3 @@ async def get_ip(request: Request):
     ip_data = await ip_service.get_ip(request)
 
     return ip_data
-
-
-    
- 

@@ -38,7 +38,7 @@ class MonitorTask:
             }
             time.sleep(self.interval)
             self.ram_info = psutil.virtual_memory()
-            self.hostname_info = psutil.os.uname().nodename
+            self.hostname_info = socket.gethostname()
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"

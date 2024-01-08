@@ -1,7 +1,8 @@
 """This module defines an exemple of test"""
 import threading
 from fastapi.testclient import TestClient
-from server import app, log_parser, count_log
+from server import app
+from domain.services.logservice import log_parser, count_log
 from monitor import MonitorTask
 
 
@@ -149,7 +150,7 @@ def test_get_ram():
 
     app.state.monitortask = MonitorTaskFake()
 
-    response = client.get("/metrics/v1/ram/ram")
+    response = client.get("/metrics/v1/ram")
     assert response.status_code == 200
     data = response.json()
 
@@ -175,7 +176,7 @@ def test_get_ip():
     """
     save_app = app.state.monitortask
     app.state.monitortask = MonitorTaskFake()
-    response = client.get("/metrics/v1/ip/ip")
+    response = client.get("/metrics/v1/ip")
     print(f"Response IP: {response.json()}")
     assert response.status_code == 200
     assert response.json() == {"ip": "testclient"}

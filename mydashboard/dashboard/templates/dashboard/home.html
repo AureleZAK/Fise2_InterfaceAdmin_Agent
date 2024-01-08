@@ -1,0 +1,99 @@
+<!-- src/main/resources/templates/home.html -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      padding-top: 56px; /* Adjust for the fixed navbar */
+    }
+    #wrapper {
+      display: flex;
+    }
+    #sidebar {
+      width: 250px;
+      background-color: #F6F7F9; /* Dark background color */
+      padding: 20px;
+      position: fixed;
+      height: 100%;
+      overflow-y: auto;
+      z-index: 1;
+    }
+    #content {
+      flex: 1;
+      margin-left: 250px; /* Adjust based on the width of the sidebar */
+      padding: 20px;
+    }
+    #sidebar nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #sidebar nav li {
+      padding: 10px;
+      background-color: #F47B68; /* Gray background color for menu items */
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+    #sidebar nav a {
+      color: #ffffff; /* White text color for menu items */
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="../home"><h2>Menu</h2></a>
+</nav>
+
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <nav>
+      <ul>
+        <a href="../pie_chart"><li>Server Status</li></a>
+        <a href="#server-control"><li>Server Control</li></a>
+        <!-- Add more menu items as needed -->
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <div id="content">
+    <!-- Your content goes here -->
+    <h2>Server Status</h2>
+    <p>Server 1: <span class="badge badge-success">Online</span></p>
+    <p>Server 2: <span class="badge badge-danger">Offline</span></p>
+
+    <h2>Server Control</h2>
+    <button class="btn btn-success" onclick="startServer()">Start Server</button>
+    <button class="btn btn-danger" onclick="stopServer()">Stop Server</button>
+  </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+  function startServer() {
+    // Add logic to start the server
+    alert('Starting server...');
+  }
+
+  function stopServer() {
+    // Add logic to stop the server
+    alert('Stopping server...');
+  }
+</script>
+
+</body>
+</html>

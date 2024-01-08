@@ -25,7 +25,8 @@ def my_view(request):
 
 def pie_chart(request):
     # Fake values for the pie chart (replace with your own data)
-    api_url = "http://localhost:8080/metrics/v1/log"
+    #api_url = "http://localhost:8081/metrics/v1/log"
+    api_url = ("http://lancelot.telecomste.net:8080/metrics/v1/log")
 
     try:
         response = requests.get(api_url)

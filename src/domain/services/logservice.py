@@ -54,7 +54,7 @@ class LogService:
         ...
 
     async def get_log(self) -> Log:
-        result= count_log("src/tests/filelog.txt")
+        result= count_log("/var/log/apache2/other_vhosts_access.log")
         return Log(
             nbip= result['total_ip'],
             failed= result['error'],

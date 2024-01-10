@@ -1,5 +1,8 @@
 image: python:3.10.12
 
+services:
+  - docker/compose:latest
+
 before_script:
   - echo "Dependencies installation"
   - python3 --version

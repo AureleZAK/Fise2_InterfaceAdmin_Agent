@@ -7,11 +7,11 @@ before_script:
   - pip3 install -r requirements.txt
 
 stages:
+  - build_and_deploy
   - compile
   - lint
   - test
   - code_coverage
-  - build_and_deploy  # Renommé pour plus de clarté
 
 compile:
   stage: compile
@@ -42,6 +42,7 @@ code_coverage:
 
 build_and_deploy:
   stage: build_and_deploy
+  image: docker:20.10.10
   script:
     - echo "Building Docker image"
     - docker build -t image_agent .
@@ -54,3 +55,5 @@ build_and_deploy:
 
     # Push the image to the registry
     - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/runner
+
+  privileged: true

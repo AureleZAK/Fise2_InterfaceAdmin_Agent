@@ -1,9 +1,5 @@
 image: python:3.10.12
 
-services:
-  - name: docker:20.10.10-dind
-    command: ["--experimental"]
-
 before_script:
   - echo "Dependencies installation"
   - python3 --version
@@ -16,6 +12,9 @@ stages:
   - lint
   - test
   - code_coverage
+
+services:
+  - docker:20.10.10-dind
 
 compile:
   stage: compile

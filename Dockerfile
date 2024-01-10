@@ -10,6 +10,6 @@ RUN pip3 install -r requirements.txt
 
 COPY ./src ./src
 
-EXPOSE 8000
+EXPOSE 8080
 
 ENTRYPOINT ["python", "/src/main.py"]

@@ -8,3 +8,4 @@ psutil
 coverage
 anybadge
 apache-log-parser
+docker

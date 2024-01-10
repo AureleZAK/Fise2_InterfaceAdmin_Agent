@@ -1,8 +1,10 @@
-image: docker:20.10.10
+image: python:3.10.12
 
 before_script:
   - echo "Dependencies installation"
-  - apk --no-cache add python3 python3-dev py3-pip
+  - python3 --version
+  - pip3 --version
+  - pip3 install -r requirements.txt
 
 stages:
   - build_and_deploy
@@ -45,10 +47,7 @@ build_and_deploy:
   stage: build_and_deploy
   script:
     - echo "Building Docker image"
-    - docker buildx create --use
-
-    # Build the Docker image with multi-architecture support
-    - docker buildx build --platform linux/amd64,linux/arm64 -t image_agent .
+    - docker build -t image_agent .
 
     # Log in to your Docker registry
     - docker login devops.telecomste.fr:5050

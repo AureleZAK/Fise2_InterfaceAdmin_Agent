@@ -1,5 +1,0 @@
-django
-plotly
-pandas
-pathlib
-requests

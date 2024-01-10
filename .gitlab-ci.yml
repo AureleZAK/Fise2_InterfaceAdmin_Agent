@@ -45,7 +45,10 @@ build_and_deploy:
   stage: build_and_deploy
   script:
     - echo "Building Docker image"
-    - docker build -t image_agent .
+    - docker buildx create --use
+
+    # Build the Docker image with multi-architecture support
+    - docker buildx build --platform linux/amd64,linux/arm64 -t image_agent .
 
     # Log in to your Docker registry
     - docker login devops.telecomste.fr:5050

@@ -42,7 +42,6 @@ code_coverage:
 
 build_and_deploy:
   stage: build_and_deploy
-  image: docker:20.10.10
   script:
     - echo "Building Docker image"
     - docker build -t image_agent .
@@ -55,5 +54,3 @@ build_and_deploy:
 
     # Push the image to the registry
     - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/runner
-
-  privileged: true

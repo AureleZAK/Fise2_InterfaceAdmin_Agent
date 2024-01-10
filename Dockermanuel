@@ -1,5 +1,5 @@
 docker build -t image_agent .
-docker run -it -p 8000:8000 image_agent
+docker run -it -p 8080:8080 image_agent
 docker images
 docker login devops.telecomste.fr:5050
 docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/runner

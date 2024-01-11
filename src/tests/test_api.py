@@ -112,7 +112,7 @@ def test_count_log() :
         AssertionError: If the counts of IPs, successful requests, failed requests,
                         or page visits do not match the expected values.
     """
-    result = count_log("src/tests/filelog.txt")
+    result = count_log("src/tests/file.log")
     assert result['total_ip'] == 3
     assert result['good'] == 4
     assert result['error'] == 1

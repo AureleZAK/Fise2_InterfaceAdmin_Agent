@@ -21,12 +21,5 @@ class IpService:
         Returns:
             Ip: Objet représentant l'adresse IP.
         """
-        print(request)
-        if request.client:
-            client_host = request.client.host
-        # Rest of the code
-        else:
-        # Handle the case when request.client is None
-            print("Client information not available.")
-            client_host = "unknown"  # or any default value you want to set
+        client_host = request.client.host
         return Ip(ip=client_host)

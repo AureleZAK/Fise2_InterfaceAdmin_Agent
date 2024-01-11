@@ -179,8 +179,15 @@ def test_get_ip():
     response = client.get("/metrics/v1/ip")
     print(f"Response IP: {response.json()}")
     assert response.status_code == 200
-    assert response.json() == {"ip": "testclient"}
+    # Vérifier si 'ip' est présent dans la réponse JSON
+    json_response = response.json()
+    assert 'ip' in json_response, "Response does not contain 'ip' key"
+
+    # Vérifier la valeur de 'ip' uniquement si 'ip' est présent dans la réponse
+    if 'ip' in json_response:
+        assert json_response['ip'] == "testclient"
     app.state.monitortask = save_app
+
 
 def test_get_hostname():
     """

@@ -21,5 +21,6 @@ class IpService:
         Returns:
             Ip: Objet représentant l'adresse IP.
         """
+        print(request)
         client_host = request.client.host
         return Ip(ip=client_host)

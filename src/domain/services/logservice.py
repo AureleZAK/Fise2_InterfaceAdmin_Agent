@@ -42,11 +42,7 @@ def count_log(log_file):
 
         return {'total_ip': len(unique_ips), 'good': cpt200, 'error':cpt404, 'total_pages':page_visits}
 
-    except FileNotFoundError as e:
-        error_message = f"Le fichier {log_file} n'a pas été trouvé"
-
-        with open('error_message', 'a') as error_file:
-            error_file.write(error_message + '\n')
+    except FileNotFoundError:
         print(f"Le fichier {log_file} n'a pas été trouvé.")
         return None
 

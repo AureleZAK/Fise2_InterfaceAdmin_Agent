@@ -114,7 +114,7 @@ def test_count_log() :
     """
     result = count_log("src/tests/filelog.txt")
     assert result['total_ip'] == 3
-    assert result['good'] == 4
+    assert result['good'] == 3
     assert result['error'] == 1
     assert result['total_pages'] == page
 

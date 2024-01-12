@@ -9,13 +9,17 @@ def log_parser(log_entry):
     parser = apache_log_parser.make_parser(log_format)
 
     parsed_data = parser(log_entry)
+    print(f"Parsed Data: {parsed_data}")
+
     result_log = [
         parsed_data.get('remote_host', ''),
         parsed_data.get('time_received', ''),
         parsed_data.get('request_first_line', ''),
         parsed_data.get('status', '')
     ]
+    print(f"Result Log: {result_log}")
     return result_log
+
 
 def count_log(log_file):
     unique_ips = set()
@@ -53,6 +57,7 @@ def count_log(log_file):
 
         with open('erreur.log', 'a') as error_file:
             error_file.write(error_message + '\n')
+            print(error_message)
 
         return {'total_ip': 0, 'good': 0, 'error': 0, 'total_pages': {}}
 

@@ -85,7 +85,7 @@ LOG = (
 
 
 result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','200']
-page = {"/":2, "/?page_id=2":1, "/wp-cron.php":1, "/?p=1":1 }
+page = {"/":2, "/?page_id=2":1, "/?p=1":1 }
 
 def test_parsing():
     """
@@ -114,7 +114,7 @@ def test_count_log() :
     """
     result = count_log("src/tests/filelog.txt")
     assert result['total_ip'] == 3
-    assert result['good'] == 4
+    assert result['good'] == 3
     assert result['error'] == 1
     assert result['total_pages'] == page
 

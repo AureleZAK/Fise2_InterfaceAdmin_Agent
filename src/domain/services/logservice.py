@@ -31,6 +31,8 @@ def count_log(log_file):
             for line in file:
                 log_entry = log_parser(line)
                 ip = log_entry[0]
+
+                # Check if the IP address is not '127.0.0.1'
                 if ip != '127.0.0.1':
                     status = log_entry[3]
                     request_url = log_entry[2]
@@ -39,7 +41,7 @@ def count_log(log_file):
                     page_visits[request_url_split] = page_visits.get(request_url_split, 0) + 1
                     if status == '404':
                         cpt404 += 1
-                    else:
+                    elif status == '200':
                         cpt200 += 1
 
         return {'total_ip': len(unique_ips), 'good': cpt200, 'error': cpt404, 'total_pages': page_visits}

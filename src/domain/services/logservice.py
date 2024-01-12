@@ -9,6 +9,7 @@ def log_parser(log_entry):
     parser = apache_log_parser.make_parser(log_format)
 
     parsed_data = parser(log_entry)
+
     result_log = [
         parsed_data.get('remote_host', ''),
         parsed_data.get('time_received', ''),
@@ -16,6 +17,7 @@ def log_parser(log_entry):
         parsed_data.get('status', '')
     ]
     return result_log
+
 
 def count_log(log_file):
     unique_ips = set()
@@ -27,10 +29,12 @@ def count_log(log_file):
         with open(log_file, 'r') as file:
             for line in file:
                 log_entry = log_parser(line)
+
                 ip = log_entry[0]
                 status = log_entry[3]
                 request_url = log_entry[2]
                 request_url_split = request_url.split()[1]
+
                 page_visits[request_url_split] = page_visits.get(request_url_split, 0) + 1
                 if (status == '404'):
                     cpt404 += 1
@@ -43,18 +47,13 @@ def count_log(log_file):
         return {'total_ip': len(unique_ips), 'good': cpt200, 'error': cpt404, 'total_pages': page_visits}
 
     except FileNotFoundError as e:
-        # Gestion de l'exception si le fichier n'est pas trouvé
         error_message = f"Le fichier {log_file} n'a pas été trouvé. Erreur : {e}"
 
-        # Redirection de l'erreur vers un fichier externe
         with open('erreur.log', 'a') as error_file:
             error_file.write(error_message + '\n')
 
-        # Renvoie un dictionnaire vide au lieu de None
         return {'total_ip': 0, 'good': 0, 'error': 0, 'total_pages': {}}
 
-
-# Controller class to fetch cpu values from monitoring task
 class LogService:
 
     def __init__(self):

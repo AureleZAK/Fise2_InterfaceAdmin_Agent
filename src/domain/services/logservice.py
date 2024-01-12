@@ -31,26 +31,27 @@ def count_log(log_file):
                 status = log_entry[3]
                 request_url = log_entry[2]
                 request_url_split = request_url.split()[1]
-                page_visits[request_url_split] = page_visits.get(request_url_split,0)+1
+                page_visits[request_url_split] = page_visits.get(request_url_split, 0) + 1
                 if (status == '404'):
-                    cpt404 = cpt404 + 1
+                    cpt404 += 1
                 else:
-                    cpt200 = cpt200 + 1
+                    cpt200 += 1
 
                 if (ip != '127.0.0.1'):
                     unique_ips.add(ip)
 
-        return {'total_ip': len(unique_ips), 'good': cpt200, 'error':cpt404, 'total_pages':page_visits}
+        return {'total_ip': len(unique_ips), 'good': cpt200, 'error': cpt404, 'total_pages': page_visits}
 
     except FileNotFoundError as e:
         # Gestion de l'exception si le fichier n'est pas trouvé
         error_message = f"Le fichier {log_file} n'a pas été trouvé. Erreur : {e}"
-        
+
         # Redirection de l'erreur vers un fichier externe
         with open('erreur.log', 'a') as error_file:
             error_file.write(error_message + '\n')
-            
-        return None
+
+        # Renvoie un dictionnaire vide au lieu de None
+        return {'total_ip': 0, 'good': 0, 'error': 0, 'total_pages': {}}
 
 
 # Controller class to fetch cpu values from monitoring task

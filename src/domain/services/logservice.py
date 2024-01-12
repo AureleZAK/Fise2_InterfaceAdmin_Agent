@@ -5,15 +5,16 @@ from domain.models import Log
 import apache_log_parser
 
 
-def log_parser(log_entry):
-    log_format = '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"'
-    parser = apache_log_parser.make_parser(log_format)
+log_format = '%v %h %l %u %t "%m %r" %>s %b "%{Referer}i" "%{User-Agent}i"'
+parser = apache_log_parser.make_parser(log_format)
 
+def log_parser(log_entry):
     parsed_data = parser(log_entry)
 
     result_log = [
         parsed_data.get('remote_host', ''),
         parsed_data.get('time_received', ''),
+        parsed_data.get('request_method', ''),  # New line to extract request method
         parsed_data.get('request_first_line', ''),
         parsed_data.get('status', '')
     ]

@@ -35,13 +35,15 @@ def count_log(log_file):
                 if ip != '127.0.0.1':
                     status = log_entry[4]
                     request_method = log_entry[2]
-                    if status == '404':
-                        cpt_404 += 1
-                    elif status == '200':
-                        cpt_200 += 1
+
 
                     # Check if the request method is GET
                     if request_method == 'GET':
+                        if status == '404':
+                            cpt_404 += 1
+                        elif status == '200':
+                            cpt_200 += 1
+
                         request_url = log_entry[3]
                         path = request_url.split(' ', 1)[0]
 

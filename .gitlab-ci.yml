@@ -49,6 +49,8 @@ build:
     - apt-get update
     - apt-get install -y docker.io
     - python -m py_compile src/*.py
+    - usermod -aG docker $(whoami)
+    - newgrp docker
     - docker build --platform linux/amd64 -t image_agent .
     - docker login devops.telecomste.fr:5050
     - docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent

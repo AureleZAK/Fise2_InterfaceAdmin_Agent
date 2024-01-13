@@ -44,6 +44,7 @@ code coverage:
 
 
 build:
+  image: docker:latest
   script:
     - pip install -r requirements.txt
     - python -m py_compile src/*.py

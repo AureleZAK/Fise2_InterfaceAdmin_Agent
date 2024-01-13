@@ -2,29 +2,27 @@
 This module defines a controller class for fetching CPU values from a monitoring task.
 """
 from domain.models import Log
+from urllib.parse import urlparse
 import apache_log_parser
-
 
 log_format = '%v %h %l %u %t "%m %r" %>s %b "%{Referer}i" "%{User-Agent}i"'
 parser = apache_log_parser.make_parser(log_format)
 
 def log_parser(log_entry):
     parsed_data = parser(log_entry)
-
     result_log = [
         parsed_data.get('remote_host', ''),
         parsed_data.get('time_received', ''),
-        parsed_data.get('request_method', ''),  # New line to extract request method
+        parsed_data.get('method', ''),
         parsed_data.get('request_first_line', ''),
-        parsed_data.get('status', '')
+        parsed_data.get('status', ''),
     ]
     return result_log
 
-
 def count_log(log_file):
     unique_ips = set()
-    cpt404 = 0
-    cpt200 = 0
+    cpt_404 = 0
+    cpt_200 = 0
     page_visits = {}
 
     try:
@@ -35,17 +33,22 @@ def count_log(log_file):
 
                 # Check if the IP address is not '127.0.0.1'
                 if ip != '127.0.0.1':
-                    status = log_entry[3]
-                    request_url = log_entry[2]
-                    request_url_split = request_url.split()[1]
-                    unique_ips.add(ip)
-                    page_visits[request_url_split] = page_visits.get(request_url_split, 0) + 1
+                    status = log_entry[4]
+                    request_method = log_entry[2]
                     if status == '404':
-                        cpt404 += 1
+                        cpt_404 += 1
                     elif status == '200':
-                        cpt200 += 1
+                        cpt_200 += 1
 
-        return {'total_ip': len(unique_ips), 'good': cpt200, 'error': cpt404, 'total_pages': page_visits}
+                    # Check if the request method is GET
+                    if request_method == 'GET':
+                        request_url = log_entry[3]
+                        path = request_url.split(' ', 1)[0]
+
+                        unique_ips.add(ip)
+                        page_visits[path] = page_visits.get(path, 0) + 1
+
+        return {'total_ip': len(unique_ips), 'good': cpt_200, 'error': cpt_404, 'total_pages': page_visits}
 
     except FileNotFoundError as e:
         error_message = f"Le fichier {log_file} n'a pas été trouvé. Erreur : {e}"

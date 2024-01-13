@@ -84,7 +84,7 @@ LOG = (
 )
 
 
-result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','200']
+result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET', '/ HTTP/1.0','200']
 page = {"/":2, "/?page_id=2":1, "/?p=1":1 }
 
 def test_parsing():
@@ -98,6 +98,8 @@ def test_parsing():
         AssertionError: If the parsed result does not match the expected result.
     """
     result = log_parser(LOG)
+    print(result)
+    print(result_log)
     assert result == result_log
 
 def test_count_log() :

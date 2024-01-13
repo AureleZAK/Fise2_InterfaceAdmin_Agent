@@ -8,6 +8,7 @@ before_script:
   - python3 --version
   - pip3 --version
   - pip3 install -r requirements.txt
+  - apk add --no-cache docker
 
 stages:
   - compile
@@ -34,7 +35,7 @@ test:
     - echo "Running test"
     - python3 -m pytest src/tests/
 
-code coverage:
+code_coverage:
   stage: code coverage
   script:
     - echo "Running code coverage"

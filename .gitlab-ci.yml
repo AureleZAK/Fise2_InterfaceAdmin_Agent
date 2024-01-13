@@ -46,7 +46,8 @@ code coverage:
 build:
   script:
     - pip install -r requirements.txt
-    - apk --no-cache add docker
+    - apt-get update
+    - apt-get install -y docker.io
     - python -m py_compile src/*.py
     - docker build --platform linux/amd64 -t image_agent .
     - docker login devops.telecomste.fr:5050

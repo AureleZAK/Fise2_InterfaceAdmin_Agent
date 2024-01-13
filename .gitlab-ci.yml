@@ -44,9 +44,9 @@ code coverage:
 
 
 build:
-  image: docker:latest
   script:
     - pip install -r requirements.txt
+    - pip install docker
     - python -m py_compile src/*.py
     - docker build --platform linux/amd64 -t image_agent .
     - docker login devops.telecomste.fr:5050

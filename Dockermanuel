@@ -4,3 +4,8 @@ docker images
 docker login devops.telecomste.fr:5050
 docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/runner
 docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
+
+docker build --platform linux/amd64 -t image_agent .
+docker login devops.telecomste.fr:5050
+docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
+docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent

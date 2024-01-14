@@ -11,5 +11,5 @@ setup:
 build:
   stage: build
   script:
-    - rc-service docker status
+    - service docker status
     - docker build --platform linux/amd64 -t image_agent .

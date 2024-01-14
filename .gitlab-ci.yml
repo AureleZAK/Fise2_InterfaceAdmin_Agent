@@ -8,6 +8,7 @@ variables:
 
 build:
   stage: build
+  image: docker:latest   # Utilisez l'image officielle Docker
   script:
     - docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:$TAG .
     - docker login $DOCKER_REGISTRY

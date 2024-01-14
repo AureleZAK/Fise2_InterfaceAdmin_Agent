@@ -12,7 +12,7 @@ build:
   image: docker:20.10.16
   stage: build
   services:
-    - docker:20.10.16-dind
+    - docker:dind
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest .
@@ -23,7 +23,7 @@ push:
   image: docker:20.10.16
   stage: push
   services:
-    - docker:20.10.16-dind
+    - docker:dind
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker tag $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/test

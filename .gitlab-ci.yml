@@ -4,12 +4,13 @@ stages:
 variables:
   DOCKER_REGISTRY: devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
   IMAGE_NAME: image_agent
-  TAG: latest
+  TAG: test
 
 build:
   stage: build
-  image: docker:latest   # Utilisez l'image officielle Docker
+  image: docker:latest 
   script:
-    - docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:$TAG .
+    - docker build -t $IMAGE_NAME_test .
     - docker login $DOCKER_REGISTRY
+    - docker tag $IMAGE_NAME_test $DOCKER_REGISTRY/$IMAGE_NAME:$TAG
     - docker push $DOCKER_REGISTRY/$IMAGE_NAME:$TAG

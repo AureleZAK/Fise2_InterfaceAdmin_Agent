@@ -1,42 +1,44 @@
-image: python:3.10.12
+# Build and push the Docker image off of merges to master; based off
+# of Gitlab CI support in https://pythonspeed.com/products/pythoncontainer/
+docker-build:
+  stage: build
+
+  image:
+    # An alpine-based image with the `docker` CLI installed.
+    name: docker:stable
+
+  # This will run a Docker daemon in a container (Docker-In-Docker), which will
+  # be available at thedockerhost:2375. If you make e.g. port 5000 public in Docker
+  # (`docker run -p 5000:5000 yourimage`) it will be exposed at thedockerhost:5000.
+  services:
+   - name: docker:dind
+     alias: thedockerhost
+
+  variables:
+    # Tell docker CLI how to talk to Docker daemon; see
+    # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-docker-in-docker-executor
+    DOCKER_HOST: tcp://thedockerhost:2375/
+    # Use the overlayfs driver for improved performance:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    CI_REGISTRY_USER: "ferjaoui.amen-allah"
+    CI_REGISTRY_PASSWORD: "glpat-YJxasyudtGiiLAkoUfQR"
+    CI_REGISTRY: "devops.telecomste.fr:5050"
 
 
-before_script:
-  - echo "Dependencies installation"
-  - python3 --version
-  - pip3 --version
-  - pip3 install -r requirements.txt
-  
 
-stages:
-  - compile
-  - lint
-  - test
-  - code coverage
-
-compile:
-  stage: compile
   script:
-    - echo "Compiling code"
-    - find src/ -type f -name '*.py' -exec python3 -m py_compile {} + 
-
-lint:
-  stage: lint
-  script:
-    - echo "Checking code quality"
-    - find src/ -type f -name '*.py' -exec python3 -m pylint --fail-under=9 {} +
-
-test:
-  stage: test
-  script:
-    - echo "Running test"
-    - python3 -m pytest src/tests/
-
-code coverage:
-  stage: code coverage
-  script:
-    - echo "Running code coverage"
-    - rm coverage.svg
-    - coverage run --source=src/ -m pytest
-    - coverage report -m
-    - anybadge --value=$(coverage report -m | grep "TOTAL" | awk '{print $4}') --file=coverage.svg --label=coverage
+    # Download bash:
+    - apk add --no-cache bash python3
+    # GitLab has a built-in Docker image registry, whose parameters are set automatically.
+    # See https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#using-the-gitlab-contai
+    #
+    # CHANGEME: You can use some other Docker registry though by changing the
+    # login and image name.
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest .
+    - docker tag $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/test
+    - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/test
+  # Only build off of master branch:
+  #only:
+   # - master

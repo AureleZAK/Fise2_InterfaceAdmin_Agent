@@ -1,22 +1,9 @@
 stages:
-  - setup
   - check_docker
-
-variables:
-  DOCKER_IMAGE_NAME: "username/image_agent"
-  DOCKER_IMAGE_TAG: "latest"
-
-setup:
-  stage: setup
-  script:
-    - apk add --no-cache docker
 
 check_docker:
   stage: check_docker
-  services:
-    - name: docker:dind
-      alias: docker
-  timeout: 60s
+  image: docker:latest
   script:
     - docker --version
     - docker info

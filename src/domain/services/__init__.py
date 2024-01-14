@@ -8,6 +8,7 @@ from .ramservice import RamService
 from .ipservice import IpService
 from .hostnameservice import HostService
 from .logservice import LogService
+from .diskservice import DiskService
 
 __all__ = [
     "CpuService",
@@ -15,4 +16,5 @@ __all__ = [
     "IpService",
     "HostService",
     "LogService",
+    "DiskService",
 ]

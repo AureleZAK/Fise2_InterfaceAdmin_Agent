@@ -42,6 +42,8 @@ code_coverage:
 
 build:
   stage: build
+  image: python:3.10.12
+  service: docker:dind
   script:
     - pip install -r requirements.txt
     - python -m py_compile src/*.py

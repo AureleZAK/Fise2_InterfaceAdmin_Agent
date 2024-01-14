@@ -17,6 +17,7 @@ class MonitorTaskFake(MonitorTask):
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
     ip: str = "192.168.1.100"
+    cpu_avg_load_percentage: list[float] = [22.5, 9.5, 4.5]
 
     def __init__(self):
         super().__init__()
@@ -87,7 +88,6 @@ LOG = (
     '200 15075 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
     '(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"'
 )
-
 
 result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET', '/ HTTP/1.0','200']
 page = {"Home":2, "Welcome to Wordpress":1, "Sample Page":1 }
@@ -210,6 +210,17 @@ def test_get_hostname():
     data = response.json()
     assert response.status_code == 200
     assert data == {"hostname": "usertest"}
+    app.state.monitortask = save_app
+
+def test_get_cpu_avg_load():
+    # backup of the existing monitortask to restore it after the test
+    save_app = app.state.monitortask
+    # use fake monitor to have deterministic values
+    app.state.monitortask = MonitorTaskFake()
+    response = client.get("/metrics/v1/cpu/avg-load")
+    assert response.status_code == 200
+    assert response.json() == {'avgLoad': [22.5, 9.5, 4.5]}
+    # restore monitortask for next test
     app.state.monitortask = save_app
 
 def test_get_disk():

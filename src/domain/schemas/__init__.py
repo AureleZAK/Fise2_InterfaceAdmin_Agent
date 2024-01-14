@@ -3,7 +3,7 @@ Ce module contient les schémas de données pour la gestion des informations sys
 """
 
 from pydantic import BaseModel
-from .cpu import GetCpuResponseSchema, GetCpuCoreResponseSchema
+from .cpu import GetCpuResponseSchema, GetCpuCoreResponseSchema, GetCpuAvgLoadResponseSchema
 from .ram import GetRamResponseSchema
 from .ip import GetIpResponseSchema
 from .hostname import GetHostnameResponseSchema
@@ -24,6 +24,7 @@ class ExceptionResponseSchema(BaseModel):
 __all__ = [
     "GetCpuResponseSchema",
     "GetCpuCoreResponseSchema",
+    "GetCpuAvgLoadResponseSchema",
     "GetRamResponseSchema",
     "GetIpResponseSchema",
     "GetHostnameResponseSchema",

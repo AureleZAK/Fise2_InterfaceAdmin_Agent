@@ -26,3 +26,12 @@ class GetCpuCoreResponseSchema(BaseModel):
     """
 
     number: int
+
+class GetCpuAvgLoadResponseSchema(BaseModel):
+    """
+    Pydantic data model for the response schema representing CPU average system load.
+
+    Attributes:
+        avgLoad (list[float]): average system load (%).
+    """
+    avgLoad: list[float]

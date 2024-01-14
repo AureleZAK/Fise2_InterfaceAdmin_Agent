@@ -7,4 +7,12 @@ docker_build:
   variables:
     DOCKER_HOST: tcp://localhost:2375
   script:
-    - docker build -t my_image .
+    - echo "Docker version:"
+    - docker --version
+    - echo "Docker daemon status:"
+    - sudo systemctl status docker
+    - echo "Docker daemon configuration:"
+    - cat /etc/docker/daemon.json
+    - echo "PATH: $PATH"
+    - echo "DOCKER_HOST: $DOCKER_HOST"
+

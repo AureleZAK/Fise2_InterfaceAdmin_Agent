@@ -1,5 +1,6 @@
 image: python:3.10.12
-
+services:
+  - docker:dind
 #before_script:
   #- echo "Dependencies installation"
   #- python3 --version
@@ -43,7 +44,6 @@ stages:
 build:
   stage: build
   script:
-    - apt-get install docker
     - docker build -t image_agent .
     - docker login devops.telecomste.fr:5050
     - docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent

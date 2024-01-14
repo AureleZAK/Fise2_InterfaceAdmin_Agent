@@ -11,6 +11,7 @@ class MonitorTask:
 
     interval: int
     cpu_percent: list[float]
+    cpu_frequency = float
     ram_info: list[float]
     num_cores: int
     ram_stats : dict
@@ -31,6 +32,7 @@ class MonitorTask:
         """Continuously monitor and store the result in an attribute."""
         while True:
             self.cpu_percent = psutil.cpu_percent(percpu=True)
+            self.cpu_frequency = psutil.cpu_freq().current
             ram = psutil.virtual_memory()
             self.ram_stats = {
                 'total' : ram.total,

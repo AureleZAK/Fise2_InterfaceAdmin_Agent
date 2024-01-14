@@ -16,3 +16,4 @@ class Cpu(BaseModel):
 
     id: int
     usage: float
+    frequency: float

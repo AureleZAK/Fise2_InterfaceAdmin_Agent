@@ -43,6 +43,9 @@ stages:
 build:
   stage: build
   script:
+    - mkdir -p /kaniko
+    - curl -L https://github.com/GoogleContainerTools/kaniko/releases/download/v1.7.0/executor-linux-amd64 -o /kaniko/executor
+    - chmod +x /kaniko/executor
     - pip install -r requirements.txt
     - python -m py_compile src/*.py
     - mkdir -p /kaniko/.docker

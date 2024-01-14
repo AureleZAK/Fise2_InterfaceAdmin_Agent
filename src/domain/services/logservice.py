@@ -40,7 +40,7 @@ def count_log(log_file):
 
                     if path == "/" or path == "/?p=1" or path == "/?page_id=2":
                         if path == "/":
-                            path = "home"
+                            path = "Home"
                         elif path == "/?p=1":
                             path = "Sample Page"
                         else:

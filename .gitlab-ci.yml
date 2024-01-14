@@ -5,7 +5,8 @@ check_docker:
   stage: check_docker
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
   script:
     - docker --version
     - docker info

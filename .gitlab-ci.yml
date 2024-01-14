@@ -13,6 +13,4 @@ docker_build:
     - sudo systemctl status docker
     - echo "Docker daemon configuration:"
     - cat /etc/docker/daemon.json
-    - echo "PATH: $PATH"
-    - echo "DOCKER_HOST: $DOCKER_HOST"
 

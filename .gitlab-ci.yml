@@ -13,41 +13,45 @@ stages:
   #- code coverage
   - build
 
-# compile:
-#   stage: compile
-#   script:
-#     - echo "Compiling code"
-#     - find src/ -type f -name '*.py' -exec python3 -m py_compile {} +
+#compile:
+  #stage: compile
+  #script:
+    #- echo "Compiling code"
+    #- find src/ -type f -name '*.py' -exec python3 -m py_compile {} +
 
-# lint:
-#   stage: lint
-#   script:
-#     - echo "Checking code quality"
-#     - find src/ -type f -name '*.py' -exec python3 -m pylint --fail-under=9 {} +
+#lint:
+  #stage: lint
+  #script:
+    #- echo "Checking code quality"
+    #- find src/ -type f -name '*.py' -exec python3 -m pylint --fail-under=9 {} +
 
-# test:
-#   stage: test
-#   script:
-#     - echo "Running test"
-#     - python3 -m pytest src/tests/
+#test:
+  #stage: test
+  #script:
+    #- echo "Running test"
+    #- python3 -m pytest src/tests/
 
-# code_coverage:
-#   stage: code coverage
-#   script:
-#     - echo "Running code coverage"
-#     - rm coverage.svg
-#     - coverage run --source=src/ -m pytest
-#     - coverage report -m
-#     - anybadge --value=$(coverage report -m | grep "TOTAL" | awk '{print $4}') --file=coverage.svg --label=coverage
+#code_coverage:
+  #stage: code coverage
+  #script:
+    #- echo "Running code coverage"
+    #- rm coverage.svg
+    #- coverage run --source=src/ -m pytest
+    #- coverage report -m
+    #- anybadge --value=$(coverage report -m | grep "TOTAL" | awk '{print $4}') --file=coverage.svg --label=coverage
 
 build:
   stage: build
+  image: ubuntu:20.04  # Choisissez la version d'Ubuntu appropriée
+  services:
+    - docker:dind
   script:
-    - mkdir -p /kaniko
-    - curl -L https://github.com/GoogleContainerTools/kaniko/releases/download/v1.7.0/executor-linux-amd64 -o /kaniko/executor
-    - chmod +x /kaniko/executor
-    - pip install -r requirements.txt
-    - python -m py_compile src/*.py
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"devops.telecomste.fr:5050\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context . --dockerfile Dockerfile --destination devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent:latest || exit 0
+    - apt-get update -qy
+    - apt-get install -y python3 python3-pip
+    - pip3 install -r requirements.txt
+    - python3 -m py_compile src/*.py
+    - apt-get install -y docker-ce
+    - docker build -t image_agent .
+    - docker login devops.telecomste.fr:5050
+    - docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
+    - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent

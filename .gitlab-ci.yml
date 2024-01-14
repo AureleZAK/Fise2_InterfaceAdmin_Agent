@@ -45,5 +45,6 @@ build:
   script:
     - pip install -r requirements.txt
     - python -m py_compile src/*.py
+    - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"devops.telecomste.fr:5050\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor --context . --dockerfile Dockerfile --destination devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent:latest

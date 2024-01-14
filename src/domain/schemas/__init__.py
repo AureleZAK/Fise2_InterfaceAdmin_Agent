@@ -23,6 +23,7 @@ class ExceptionResponseSchema(BaseModel):
 __all__ = [
     "GetCpuResponseSchema",
     "GetCpuCoreResponseSchema",
+    "GetCpuAvgLoadResponseSchema",
     "GetRamResponseSchema",
     "GetIpResponseSchema",
     "GetHostnameResponseSchema",

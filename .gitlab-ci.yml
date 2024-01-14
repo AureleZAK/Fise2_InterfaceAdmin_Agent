@@ -4,8 +4,7 @@ variables:
   CONTAINER_IMAGE: devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
 
 stages:
-  
-  build
+  - build
 
 build:
   stage: build

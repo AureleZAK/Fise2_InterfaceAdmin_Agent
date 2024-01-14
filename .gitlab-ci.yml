@@ -1,4 +1,4 @@
-image: python:3.12.10
+image: python:3.10.12
 
 before_script: &setup
   - echo "Dependencies installation"

@@ -39,6 +39,13 @@ def count_log(log_file):
                     path = request_url.split(' ', 1)[0]
 
                     if path == "/" or path == "/?p=1" or path == "/?page_id=2":
+                        if path == "/":
+                            path = "home"
+                        elif path == "/?p=1":
+                            path = "Sample Page"
+                        else:
+                            path = "Welcome to Wordpress"
+
                         page_visits[path] = page_visits.get(path, 0) + 1
                         if request_method == 'GET':
                             if status == '404':

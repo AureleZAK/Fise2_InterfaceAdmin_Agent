@@ -6,8 +6,7 @@ stages:
 setup:
   stage: setup
   script:
-    - apt-get update -qy
-    - apt-get install -y docker.io
+    - apk add --no-cache docker
 
 build:
   stage: build

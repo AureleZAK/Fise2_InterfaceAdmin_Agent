@@ -63,4 +63,4 @@ docker-build:
     - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
 
 except:
-  - docker-build  # Exclure le stage "docker-build"
+    - docker-build  # Exclure le stage "docker-build"

@@ -1,10 +1,6 @@
 check_docker:
-  stage: check_docker
-  image: docker:latest
-  services:
-    - name: docker:dind
-      alias: docker
+  image: alpine:latest
   script:
-    - export DOCKER_HOST=tcp://docker:2375
+    - apk add --no-cache docker
     - docker --version
     - docker info

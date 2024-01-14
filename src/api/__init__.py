@@ -7,6 +7,7 @@ Routes disponibles :
 - `/metrics/v1/ip` : Routes pour les métriques IP.
 - `/metrics/v1/hostname` : Routes pour les métriques de nom d'hôte.
 - `/metrics/v1/disk` : Routes pour les métriques Disk
+- `/metrics/v1/top` : Routes pour les top consommateurs
 """
 from fastapi import APIRouter
 from api.metrics.v1.cpu import cpu_router as cpu_v1_router
@@ -15,6 +16,7 @@ from api.metrics.v1.ip import ip_router as ip_v1_router
 from api.metrics.v1.hostname import host_router as host_v1_router
 from api.metrics.v1.log import log_router as log_v1_router
 from api.metrics.v1.disk import disk_router as disk_v1_router
+from api.metrics.v1.top import top_router as top_v1_router
 
 router = APIRouter()
 router.include_router(cpu_v1_router, prefix="/metrics/v1/cpu")
@@ -23,5 +25,6 @@ router.include_router(ip_v1_router, prefix="/metrics/v1/ip")
 router.include_router(host_v1_router, prefix="/metrics/v1/hostname")
 router.include_router(log_v1_router, prefix="/metrics/v1/log")
 router.include_router(disk_v1_router, prefix="/metrics/v1/disk")
+router.include_router(top_v1_router, prefix="/metrics/v1/top")
 
 __all__ = ["router"]

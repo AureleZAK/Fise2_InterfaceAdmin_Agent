@@ -9,6 +9,7 @@ from .ipservice import IpService
 from .hostnameservice import HostService
 from .logservice import LogService
 from .diskservice import DiskService
+from .topservice import TopProcessesService
 
 __all__ = [
     "CpuService",
@@ -17,4 +18,5 @@ __all__ = [
     "HostService",
     "LogService",
     "DiskService",
+    "TopProcessesService"
 ]

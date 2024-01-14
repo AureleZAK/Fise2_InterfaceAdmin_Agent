@@ -9,7 +9,7 @@ from .ip import GetIpResponseSchema
 from .hostname import GetHostnameResponseSchema
 from .log import GetLogResponseSchema
 from .disk import GetDiskResponseSchema
-
+from .top import TopProcessesResponseSchema
 
 class ExceptionResponseSchema(BaseModel):
     """
@@ -30,5 +30,6 @@ __all__ = [
     "GetHostnameResponseSchema",
     "ExceptionResponseSchema",
     "GetLogResponseSchema",
-    "GetDiskResponseSchema"
+    "GetDiskResponseSchema",
+    "TopProcessesResponseSchema"
 ]

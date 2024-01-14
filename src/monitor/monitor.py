@@ -2,6 +2,7 @@
 import time
 import psutil
 import socket
+import asyncio
 
 
 class MonitorTask:
@@ -17,6 +18,7 @@ class MonitorTask:
     ram_stats : dict
     hostname_info : str
     disk_stats: dict
+    top_stats: dict 
 
     def __init__(self) -> None:
         """
@@ -28,8 +30,39 @@ class MonitorTask:
         self.interval = 3
         self.num_cores = psutil.cpu_count(logical=False)
         self.ram_stats = {}
+        self.top_stats = {} # Ajoutez ceci pour créer une instance du service
+  
+  
+    async def gett_top_processes(self):
+        """
+        Get the top CPU and memory consuming processes.
+        """
+        # Obtenez les processus CPU
+        top_cpu_processes = []
+        for proc in sorted(psutil.process_iter(), key=lambda x: x.cpu_percent(), reverse=True)[:5]:
+            top_cpu_processes.append({
+                'pid': proc.pid,
+                'name': proc.name(),
+                'cpu_percent': proc.cpu_percent(),
+            })
 
-    def monitor(self):
+        # Obtenez les processus mémoire
+        top_memory_processes = []
+        for proc in sorted(psutil.process_iter(), key=lambda x: x.memory_info().rss, reverse=True)[:5]:
+            top_memory_processes.append({
+                'pid': proc.pid,
+                'name': proc.name(),
+                'memory_usage': proc.memory_info().rss,
+            })
+
+        return {
+            'top_cpu_processes': top_cpu_processes,
+            'top_memory_processes': top_memory_processes,
+        }
+
+
+
+    async def monitor(self):
         """Continuously monitor and store the result in an attribute."""
         while True:
             self.cpu_percent = psutil.cpu_percent(percpu=True)
@@ -49,7 +82,9 @@ class MonitorTask:
                 'used': disk.used,
                 'percent': disk.percent
             }
-            time.sleep(self.interval)           
+            self.top_stats = await self.gett_top_processes()
+
+            await asyncio.sleep(self.interval)
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"

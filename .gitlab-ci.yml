@@ -36,6 +36,7 @@ docker-build:
     # CHANGEME: You can use some other Docker registry though by changing the
     # login and image name.
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest .
     - docker tag $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/test
     - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/test
   # Only build off of master branch:

@@ -10,7 +10,7 @@ docker_build:
     - echo "Docker version:"
     - docker --version
     - echo "Docker daemon status:"
-    - sudo systemctl status docker
+    - systemctl status docker
     - echo "Docker daemon configuration:"
     - cat /etc/docker/daemon.json
 

@@ -7,4 +7,3 @@ psutil
 anybadge
 apache-log-parser
 anybadge
-docker

@@ -5,6 +5,7 @@ from .ram import Ram
 from .ip import Ip
 from .hostname import Hostname
 from .log import Log
+from .disk import Disk
 
 __all__ = [
     "Cpu",
@@ -12,4 +13,5 @@ __all__ = [
     "Ip",
     "Hostname",
     "Log",
+    "Disk",
 ]

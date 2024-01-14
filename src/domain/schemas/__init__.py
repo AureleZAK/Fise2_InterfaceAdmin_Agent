@@ -8,6 +8,7 @@ from .ram import GetRamResponseSchema
 from .ip import GetIpResponseSchema
 from .hostname import GetHostnameResponseSchema
 from .log import GetLogResponseSchema
+from .disk import GetDiskResponseSchema
 
 
 class ExceptionResponseSchema(BaseModel):
@@ -28,4 +29,5 @@ __all__ = [
     "GetHostnameResponseSchema",
     "ExceptionResponseSchema",
     "GetLogResponseSchema",
+    "GetDiskResponseSchema"
 ]

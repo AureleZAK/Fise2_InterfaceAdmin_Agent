@@ -28,6 +28,11 @@ class MonitorTaskFake(MonitorTask):
             'free': 4000,   # 4000 MB libres
             'percent': 50   # 50% d'utilisation
         }
+        self.disk_stats = {
+            'total': 8000, 
+            'used': 4000,
+            'percent': 50
+        }
 
     def monitor(self):
         pass
@@ -206,3 +211,20 @@ def test_get_hostname():
     assert response.status_code == 200
     assert data == {"hostname": "usertest"}
     app.state.monitortask = save_app
+
+def test_get_disk():
+    original_monitortask = app.state.monitortask
+
+    app.state.monitortask = MonitorTaskFake()
+
+    response = client.get("/metrics/v1/disk")
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data == {
+        'total': 8000,
+        'used': 4000,
+        'percent': 50
+    }
+
+    app.state.monitortask = original_monitortask

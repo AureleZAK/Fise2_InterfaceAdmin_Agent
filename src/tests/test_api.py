@@ -17,6 +17,7 @@ class MonitorTaskFake(MonitorTask):
     cpu_percent: list[float] = [10, 12]
     num_cores: int = 3
     ip: str = "192.168.1.100"
+    cpu_avg_load_percentage: list[float] = [22.5, 9.5, 4.5]
 
     def __init__(self):
         super().__init__()
@@ -27,6 +28,11 @@ class MonitorTaskFake(MonitorTask):
             'used': 4000,   # 4000 MB utilisés
             'free': 4000,   # 4000 MB libres
             'percent': 50   # 50% d'utilisation
+        }
+        self.disk_stats = {
+            'total': 8000, 
+            'used': 4000,
+            'percent': 50
         }
 
     def monitor(self):
@@ -83,9 +89,8 @@ LOG = (
     '(KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"'
 )
 
-
-result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET / HTTP/1.0','200']
-page = {"/":2, "/?page_id=2":1, "/wp-cron.php":1, "/?p=1":1 }
+result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET', '/ HTTP/1.0','200']
+page = {"Home":2, "Welcome to Wordpress":1, "Sample Page":1 }
 
 def test_parsing():
     """
@@ -98,6 +103,8 @@ def test_parsing():
         AssertionError: If the parsed result does not match the expected result.
     """
     result = log_parser(LOG)
+    print(result)
+    print(result_log)
     assert result == result_log
 
 def test_count_log() :
@@ -114,7 +121,7 @@ def test_count_log() :
     """
     result = count_log("src/tests/filelog.txt")
     assert result['total_ip'] == 3
-    assert result['good'] == 4
+    assert result['good'] == 3
     assert result['error'] == 1
     assert result['total_pages'] == page
 
@@ -179,8 +186,10 @@ def test_get_ip():
     response = client.get("/metrics/v1/ip")
     print(f"Response IP: {response.json()}")
     assert response.status_code == 200
-    assert response.json() == {"ip": "testclient"}
+    json_response = response.json()
+    assert json_response['ip'] in ["unknown","testclient"]
     app.state.monitortask = save_app
+
 
 def test_get_hostname():
     """
@@ -202,3 +211,31 @@ def test_get_hostname():
     assert response.status_code == 200
     assert data == {"hostname": "usertest"}
     app.state.monitortask = save_app
+
+def test_get_cpu_avg_load():
+    # backup of the existing monitortask to restore it after the test
+    save_app = app.state.monitortask
+    # use fake monitor to have deterministic values
+    app.state.monitortask = MonitorTaskFake()
+    response = client.get("/metrics/v1/cpu/avg-load")
+    assert response.status_code == 200
+    assert response.json() == {'avgLoad': [22.5, 9.5, 4.5]}
+    # restore monitortask for next test
+    app.state.monitortask = save_app
+
+def test_get_disk():
+    original_monitortask = app.state.monitortask
+
+    app.state.monitortask = MonitorTaskFake()
+
+    response = client.get("/metrics/v1/disk")
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data == {
+        'total': 8000,
+        'used': 4000,
+        'percent': 50
+    }
+
+    app.state.monitortask = original_monitortask

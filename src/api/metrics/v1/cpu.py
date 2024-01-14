@@ -7,6 +7,7 @@ from domain.schemas import (
     ExceptionResponseSchema,
     GetCpuResponseSchema,
     GetCpuCoreResponseSchema,
+    GetCpuAvgLoadResponseSchema,
 )
 from domain.services import CpuService
 
@@ -49,3 +50,20 @@ async def get_core_number(request: Request) -> GetCpuCoreResponseSchema:
         int: number of cpu core.
     """
     return GetCpuCoreResponseSchema(number=request.app.state.monitortask.num_cores)
+
+@cpu_router.get(
+    "/avg-load",
+    response_model=GetCpuAvgLoadResponseSchema,
+    responses={"400": {"model": ExceptionResponseSchema}},
+)
+async def get_avg_load(request: Request) -> GetCpuAvgLoadResponseSchema:
+    """
+    Route to get the percentage representation of the average system load
+
+    Args:
+        request (Request): The incoming request.
+
+    Returns:
+        list[float]: average system load (%)
+    """
+    return GetCpuAvgLoadResponseSchema(avgLoad=request.app.state.monitortask.cpu_avg_load_percentage)

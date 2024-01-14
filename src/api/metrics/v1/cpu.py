@@ -7,6 +7,7 @@ from domain.schemas import (
     ExceptionResponseSchema,
     GetCpuResponseSchema,
     GetCpuCoreResponseSchema,
+    GetCpuAvgLoadResponseSchema,
 )
 from domain.services import CpuService
 

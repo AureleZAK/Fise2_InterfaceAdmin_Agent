@@ -1,15 +1,15 @@
 stages:
+  - setup
   - build
 
-docker_build:
-  stage: build
-  image: docker:latest
-  variables:
-    DOCKER_HOST: tcp://localhost:2375
+
+setup:
+  stage: setup
   script:
-    - echo "Docker version:"
-    - docker --version
-    - echo "Docker daemon info:"
-    - docker info
-    - echo "Docker daemon configuration:"
-    - cat /etc/docker/daemon.json || echo "No daemon.json file found"
+    - apt-get update -qy
+    - apt-get install -y docker.io
+
+build:
+  stage: build
+  script:
+    - docker build --platform linux/amd64 -t image_agent .

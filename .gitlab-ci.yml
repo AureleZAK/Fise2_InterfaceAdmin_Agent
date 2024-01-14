@@ -42,7 +42,6 @@ stages:
 
 build:
   stage: build
-  image: python:3:10:12
   services:
     - docker:dind
   script:

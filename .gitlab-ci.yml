@@ -11,5 +11,5 @@ setup:
 build:
   stage: build
   script:
-    - usermod -aG docker $USER
+    - adduser $USER docker
     - docker build --platform linux/amd64 -t image_agent .

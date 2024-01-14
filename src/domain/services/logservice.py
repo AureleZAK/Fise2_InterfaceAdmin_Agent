@@ -35,20 +35,24 @@ def count_log(log_file):
                 if ip != '127.0.0.1':
                     status = log_entry[4]
                     request_method = log_entry[2]
+                    request_url = log_entry[3]
+                    path = request_url.split(' ', 1)[0]
 
+                    if path == "/" or path == "/?p=1" or path == "/?page_id=2":
+                        if path == "/":
+                            path = "Home"
+                        elif path == "/?p=1":
+                            path = "Sample Page"
+                        else:
+                            path = "Welcome to Wordpress"
 
-                    # Check if the request method is GET
-                    if request_method == 'GET':
-                        if status == '404':
-                            cpt_404 += 1
-                        elif status == '200':
-                            cpt_200 += 1
-
-                        request_url = log_entry[3]
-                        path = request_url.split(' ', 1)[0]
-
-                        unique_ips.add(ip)
                         page_visits[path] = page_visits.get(path, 0) + 1
+                        if request_method == 'GET':
+                            if status == '404':
+                                cpt_404 += 1
+                            elif status == '200':
+                                cpt_200 += 1
+                            unique_ips.add(ip)
 
         return {'total_ip': len(unique_ips), 'good': cpt_200, 'error': cpt_404, 'total_pages': page_visits}
 

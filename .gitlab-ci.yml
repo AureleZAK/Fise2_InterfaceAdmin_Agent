@@ -2,6 +2,10 @@ stages:
   - setup
   - check_docker
 
+variables:
+  DOCKER_IMAGE_NAME: "username/image_agent"
+  DOCKER_IMAGE_TAG: "latest"
+
 setup:
   stage: setup
   script:
@@ -10,7 +14,9 @@ setup:
 check_docker:
   stage: check_docker
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
+  timeout: 60s
   script:
     - docker --version
     - docker info

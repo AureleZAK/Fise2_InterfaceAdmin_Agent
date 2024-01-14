@@ -38,7 +38,7 @@ def count_log(log_file):
                     request_url = log_entry[3]
                     path = request_url.split(' ', 1)[0]
 
-                    if path == "/" or path == "/?p=1" or path == "/?p=2":
+                    if path == "/" or path == "/?p=1" or path == "/?page_id=2":
                         page_visits[path] = page_visits.get(path, 0) + 1
                         if request_method == 'GET':
                             if status == '404':

@@ -42,13 +42,15 @@ stages:
 
 build:
   stage: build
-  image: python:3:10:12-docker
+  image: python:3:10:12
   services:
     - docker:dind
   script:
+    - apt-get install -y docker-ce
     - pip install -r requirements.txt
     - python -m py_compile src/*.py
     - docker build -t image_agent .
     - docker login devops.telecomste.fr:5050
     - docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
     - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
+

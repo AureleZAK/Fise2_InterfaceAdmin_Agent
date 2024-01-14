@@ -1,3 +1,5 @@
+image: python:3.12.10
+
 before_script: &setup
   - echo "Dependencies installation"
   - python3 --version

@@ -16,6 +16,7 @@ class MonitorTask:
     num_cores: int
     ram_stats : dict
     hostname_info : str
+    disk_stats: dict
 
     def __init__(self) -> None:
         """
@@ -40,9 +41,15 @@ class MonitorTask:
                 'free' : ram.available,
                 'percent' : ram.percent
             }
-            time.sleep(self.interval)
             self.ram_info = psutil.virtual_memory()
             self.hostname_info = socket.gethostname()
+            disk = psutil.disk_usage('/')
+            self.disk_stats = {
+                'total': disk.total,
+                'used': disk.used,
+                'percent': disk.percent
+            }
+            time.sleep(self.interval)           
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"

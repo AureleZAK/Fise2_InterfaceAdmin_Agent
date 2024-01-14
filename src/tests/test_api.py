@@ -29,6 +29,11 @@ class MonitorTaskFake(MonitorTask):
             'free': 4000,   # 4000 MB libres
             'percent': 50   # 50% d'utilisation
         }
+        self.disk_stats = {
+            'total': 8000, 
+            'used': 4000,
+            'percent': 50
+        }
 
     def monitor(self):
         pass
@@ -85,7 +90,7 @@ LOG = (
 )
 
 result_log = ['192.168.240.50','[08/Dec/2023:08:55:20 +0000]','GET', '/ HTTP/1.0','200']
-page = {"/":2, "/?page_id=2":1, "/?p=1":1 }
+page = {"Home":2, "Welcome to Wordpress":1, "Sample Page":1 }
 
 def test_parsing():
     """
@@ -217,3 +222,20 @@ def test_get_cpu_avg_load():
     assert response.json() == {'avgLoad': [22.5, 9.5, 4.5]}
     # restore monitortask for next test
     app.state.monitortask = save_app
+
+def test_get_disk():
+    original_monitortask = app.state.monitortask
+
+    app.state.monitortask = MonitorTaskFake()
+
+    response = client.get("/metrics/v1/disk")
+    assert response.status_code == 200
+    data = response.json()
+
+    assert data == {
+        'total': 8000,
+        'used': 4000,
+        'percent': 50
+    }
+
+    app.state.monitortask = original_monitortask

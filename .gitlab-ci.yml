@@ -9,8 +9,7 @@ docker_build:
   script:
     - echo "Docker version:"
     - docker --version
-    - echo "Docker daemon status:"
-    - systemctl status docker
+    - echo "Docker daemon info:"
+    - docker info
     - echo "Docker daemon configuration:"
-    - cat /etc/docker/daemon.json
-
+    - cat /etc/docker/daemon.json || echo "No daemon.json file found"

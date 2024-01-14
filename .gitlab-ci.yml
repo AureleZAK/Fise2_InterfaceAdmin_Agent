@@ -1,12 +1,9 @@
-image: python:3.10.12
-
-
 before_script:
   - echo "Dependencies installation"
   - python3 --version
   - pip3 --version
   - pip3 install -r requirements.txt
-  
+
 stages:
   - compile
   - lint
@@ -18,7 +15,7 @@ compile:
   stage: compile
   script:
     - echo "Compiling code"
-    - find src/ -type f -name '*.py' -exec python3 -m py_compile {} + 
+    - find src/ -type f -name '*.py' -exec python3 -m py_compile {} +
 
 lint:
   stage: lint
@@ -64,5 +61,6 @@ docker-build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - docker build -t $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent:latest .
     - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
-    # only:
-    #  - main
+
+except:
+  - docker-build  # Exclure le stage "docker-build"

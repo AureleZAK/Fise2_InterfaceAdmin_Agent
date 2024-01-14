@@ -1,18 +1,8 @@
-variables:
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
-  CONTAINER_IMAGE: devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
-
 stages:
   - build
 
-build:
+docker_build:
   stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:latest
-    entrypoint: [""]
+  image: docker:latest
   script:
-  - echo "Building Docker image"
-  - mkdir -p /kaniko/.docker
-  - echo "{"auths":{"devops.telecomste.fr:5050":{"auth":"$(echo -n "username:password" | base64)"}}}" > /kaniko/.docker/config.json
-  - /kaniko/executor --context . --dockerfile Dockerfile --destination $CONTAINER_IMAGE
+    - docker build -t my_image .

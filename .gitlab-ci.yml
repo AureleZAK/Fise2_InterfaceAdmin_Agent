@@ -1,17 +1,32 @@
 stages:
   - build
+  - push
 
 variables:
-  DOCKER_REGISTRY: devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
-  IMAGE_NAME: image_agent
-  TAG: test
+  CI_REGISTRY_USER: "ferjaoui.amen-allah"
+  CI_REGISTRY_PASSWORD: "glpat-YJxasyudtGiiLAkoUfQR"
+  CI_REGISTRY: "devops.telecomste.fr:5050"
+
 
 build:
+  image: docker:20.10.16
   stage: build
-  image: docker:latest 
+  services:
+    - docker:20.10.16-dind
   script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $DOCKER_REGISTRY
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest .
+  #only:
+   # - main
 
-   
-    - docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:$TAG .
-    - docker push $DOCKER_REGISTRY/$IMAGE_NAME:$TAG
+push:
+  image: docker:20.10.16
+  stage: push
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker tag $CI_REGISTRY/printerfaceadmin/2023-24/group4/agent/test:latest devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/test
+    - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent/test
+  #only:
+  #  - main

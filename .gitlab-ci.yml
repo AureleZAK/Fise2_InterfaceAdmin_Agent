@@ -4,5 +4,7 @@ stages:
 docker_build:
   stage: build
   image: docker:latest
+  variables:
+    DOCKER_HOST: tcp://localhost:2375
   script:
     - docker build -t my_image .

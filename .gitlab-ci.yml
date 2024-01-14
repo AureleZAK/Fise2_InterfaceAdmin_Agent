@@ -1,15 +1,19 @@
-image: docker:20.10
-
-services:
-  - docker:dind
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+  CONTAINER_IMAGE: devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
 
 stages:
-  - build
+  
+  build
 
 build:
   stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:latest
+    entrypoint: [""]
   script:
-    - docker build -t image_agent .
-    - docker login devops.telecomste.fr:5050
-    - docker tag image_agent devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
-    - docker push devops.telecomste.fr:5050/printerfaceadmin/2023-24/group4/agent
+  - echo "Building Docker image"
+  - mkdir -p /kaniko/.docker
+  - echo "{"auths":{"devops.telecomste.fr:5050":{"auth":"$(echo -n "username:password" | base64)"}}}" > /kaniko/.docker/config.json
+  - /kaniko/executor --context . --dockerfile Dockerfile --destination $CONTAINER_IMAGE

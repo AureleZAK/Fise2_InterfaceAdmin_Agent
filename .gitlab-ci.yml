@@ -10,6 +10,8 @@ build:
   stage: build
   image: docker:latest 
   script:
-    - docker login $DOCKER_REGISTRY
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $DOCKER_REGISTRY
+
+   
     - docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:$TAG .
     - docker push $DOCKER_REGISTRY/$IMAGE_NAME:$TAG

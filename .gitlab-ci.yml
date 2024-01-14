@@ -1,8 +1,8 @@
 stages:
-  - build
+  - check_docker
 
-build:
-  stage: build
+check_docker:
+  stage: check_docker
   script:
-    - export DOCKER_BUILDKIT=1
-    - docker build --platform linux/amd64 -t image_agent .
+    - docker --version
+    - docker info

@@ -2,7 +2,6 @@
 import time
 import psutil
 import socket
-import asyncio
 
 
 class MonitorTask:
@@ -33,36 +32,9 @@ class MonitorTask:
         self.top_stats = {} # Ajoutez ceci pour créer une instance du service
   
   
-    async def gett_top_processes(self):
-        """
-        Get the top CPU and memory consuming processes.
-        """
-        # Obtenez les processus CPU
-        top_cpu_processes = []
-        for proc in sorted(psutil.process_iter(), key=lambda x: x.cpu_percent(), reverse=True)[:5]:
-            top_cpu_processes.append({
-                'pid': proc.pid,
-                'name': proc.name(),
-                'cpu_percent': proc.cpu_percent(),
-            })
-
-        # Obtenez les processus mémoire
-        top_memory_processes = []
-        for proc in sorted(psutil.process_iter(), key=lambda x: x.memory_info().rss, reverse=True)[:5]:
-            top_memory_processes.append({
-                'pid': proc.pid,
-                'name': proc.name(),
-                'memory_usage': proc.memory_info().rss,
-            })
-
-        return {
-            'top_cpu_processes': top_cpu_processes,
-            'top_memory_processes': top_memory_processes,
-        }
 
 
-
-    async def monitor(self):
+    def monitor(self):
         """Continuously monitor and store the result in an attribute."""
         while True:
             self.cpu_percent = psutil.cpu_percent(percpu=True)
@@ -82,9 +54,33 @@ class MonitorTask:
                 'used': disk.used,
                 'percent': disk.percent
             }
-            self.top_stats = await self.gett_top_processes()
+        
 
-            await asyncio.sleep(self.interval)
+            top_cpu_processes = []
+            for proc in sorted(psutil.process_iter(), key=lambda x: x.cpu_percent(), reverse=True)[:6]:
+                top_cpu_processes.append({
+                    'pid': proc.pid,
+                    'name': proc.name(),
+                    'cpu_percent': proc.cpu_percent(),
+                })
+
+            # Obtenez les processus mémoire
+            top_memory_processes = []
+            for proc in sorted(psutil.process_iter(), key=lambda x: x.memory_info().rss, reverse=True)[:5]:
+                top_memory_processes.append({
+                    'pid': proc.pid,
+                    'name': proc.name(),
+                    'memory_usage': proc.memory_info().rss,
+                })
+                filtered_top_cpu_processes = [process for process in top_cpu_processes if process["name"] != "System Idle Process"]
+                sorted_filtered_top_cpu_processes = sorted(filtered_top_cpu_processes, key=lambda x: x['cpu_percent'], reverse=True)
+
+                self.top_stats = {
+                    'top_cpu_processes': sorted_filtered_top_cpu_processes,
+                    'top_memory_processes': top_memory_processes,
+}
+
+            time.sleep(self.interval)
 
     def __str__(self) -> str:
         return f"MonitorTask(interval = {self.interval})"
